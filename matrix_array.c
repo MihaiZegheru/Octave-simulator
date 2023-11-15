@@ -30,6 +30,7 @@ Matrix *add_matrix(MatrixArray *matrix_array)
     }
 
     Matrix *matrix = read_matrix();
+
     matrix_array->matrices[matrix_array->size] = malloc(sizeof(Matrix *));
     if (matrix_array->matrices[matrix_array->size] == NULL) {
         // err
@@ -48,7 +49,13 @@ Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array)
 
 void double_matrix_array_capacity(MatrixArray *matrix_array)
 {
-    matrix_array->capacity *= 2;
+    if (matrix_array->capacity == 0) {
+        matrix_array->capacity = 1;
+    }
+    else {
+        matrix_array->capacity *= 2;
+    }
+    
     matrix_array->matrices = realloc(matrix_array->matrices,
                                      matrix_array->capacity * sizeof(int*));
 
