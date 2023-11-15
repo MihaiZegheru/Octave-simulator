@@ -44,6 +44,10 @@ Matrix *add_matrix(MatrixArray *matrix_array)
 
 Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array)
 {
+    if (index > matrix_array->size) {
+        return NULL;
+    }
+    
     return matrix_array->matrices[index];
 }
 
