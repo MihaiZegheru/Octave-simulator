@@ -9,6 +9,7 @@ typedef struct {
     int **values;
 } Matrix;
 
-// int **read_matrix(unsigned int *size_n, unsigned int *size_m);
+Matrix *new_matrix(unsigned int size_n, unsigned int size_m);
+Matrix *new_matrix();
 
 #endif

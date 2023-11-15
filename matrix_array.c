@@ -23,15 +23,27 @@ void delete_matrix_array(MatrixArray *matrix_array)
     free(matrix_array);
 }
 
-void add_matrix(MatrixArray *matrix_array)
+Matrix *add_matrix(MatrixArray *matrix_array)
 {
     if (matrix_array->size + 1 >= matrix_array->capacity) {
         double_matrix_array_capacity(matrix_array);
     }
 
-    Matrix matrix = read_matrix();
+    Matrix *matrix = read_matrix();
+    matrix_array->matrices[matrix_array->size] = malloc(sizeof(Matrix *));
+    if (matrix_array->matrices[matrix_array->size] == NULL) {
+        // err
+    }
+
     matrix_array->matrices[matrix_array->size] = matrix;
     matrix_array->size++;
+
+    return matrix;
+}
+
+Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array)
+{
+    return matrix_array->matrices[index];
 }
 
 void double_matrix_array_capacity(MatrixArray *matrix_array)
