@@ -1,5 +1,7 @@
 #include "matrix_array.h"
 
+#include "io_handle.h"
+
 MatrixArray *new_matrix_array(unsigned int starting_capacity)
 {
     MatrixArray *matrix_array = malloc(sizeof(MatrixArray));
@@ -27,8 +29,9 @@ void add_matrix(MatrixArray *matrix_array)
         double_matrix_array_capacity(matrix_array);
     }
 
-    unsigned int size_i, size_j;
-    read_matrix(&size_i, &size_j);
+    Matrix matrix = read_matrix();
+    matrix_array->matrices[matrix_array->size] = matrix;
+    matrix_array->size++;
 }
 
 void double_matrix_array_capacity(MatrixArray *matrix_array)

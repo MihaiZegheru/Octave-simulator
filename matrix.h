@@ -5,9 +5,10 @@
 #include <stdlib.h>
 
 typedef struct {
-    int **matrix;
+    unsigned int size_n, size_m;
+    int **values;
 } Matrix;
 
-int **read_matrix(unsigned int *size_i, unsigned int *size_j);
+// int **read_matrix(unsigned int *size_n, unsigned int *size_m);
 
 #endif

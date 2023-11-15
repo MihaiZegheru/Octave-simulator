@@ -1,18 +1,18 @@
 #include "matrix.h"
 
-int **read_matrix(unsigned int *size_i, unsigned int *size_j)
-{
-    scanf("%u%u", size_i, size_j);
+// int **read_matrix(unsigned int *size_n, unsigned int *size_m)
+// {
+//     scanf("%u%u", size_n, size_m);
 
-    int **matrix = malloc(*size_i * sizeof(int*));
+//     int **values = malloc(*size_n * sizeof(int*));
 
-    for (unsigned int i = 0; i < *size_i; i++) {
-        matrix[i] = malloc(*size_j * sizeof(int));
-    }
+//     for (unsigned int i = 0; i < *size_n; i++) {
+//         values[i] = malloc(*size_m * sizeof(int));
+//     }
 
-    for (unsigned int i = 0; i < *size_i; i++) {
-        for (int j = 0; j < *size_j; j++) {
-            // scanf(%)
-        }
-    }
-}
+//     for (unsigned int i = 0; i < *size_n; i++) {
+//         for (int j = 0; j < *size_m; j++) {
+//             // scanf(%)
+//         }
+//     }
+// }
