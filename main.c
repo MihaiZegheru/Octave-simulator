@@ -21,8 +21,16 @@ int main(void)
         if (cmd == 'P') {
             unsigned int index;
             scanf("%u", &index);
+
             Matrix *matrix = get_matrix_by_index(index, matrix_array);
             print_matrix(matrix);
+        }
+        if (cmd == 'D') {
+            unsigned int index;
+            scanf("%u", &index);
+
+            Matrix *matrix = get_matrix_by_index(index, matrix_array);
+            printf("%u %u\n", matrix->size_n, matrix->size_m);
         }
     }
 
