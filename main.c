@@ -33,6 +33,9 @@ int main(void)
         if (cmd == 'O') {
             sort_matrix_array_task(matrix_array);
         }
+        if (cmd == 'T') {
+            transpose_matrix_task(matrix_array);
+        }
     }
 
     delete_matrix_array(matrix_array);

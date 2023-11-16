@@ -40,7 +40,7 @@ void add_matrix(Matrix *matrix, MatrixArray *matrix_array)
 
 Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array)
 {
-    if (index > matrix_array->size - 1) {
+    if (matrix_array->size == 0 || index > matrix_array->size - 1) {
         return NULL;
     }
     

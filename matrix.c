@@ -81,6 +81,30 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
     return result;
 }
 
+void transpose_matrix(Matrix *matrix)
+{
+    unsigned int new_size_n = matrix->size_m;
+    unsigned int new_size_m = matrix->size_n;
+
+    Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
+
+    for (unsigned int i = 0; i < new_size_n; i++) {
+        for (unsigned int j = 0; j < new_size_m; j++) {
+            aux_matrix->values[i][j] = matrix->values[j][i];
+        }
+    }
+
+    resize_matrix(new_size_n, new_size_m, matrix);
+
+    for (unsigned int i = 0; i < new_size_n; i++) {
+        for (unsigned int j = 0; j < new_size_m; j++) {
+            matrix->values[i][j] = aux_matrix->values[i][j];
+        }
+    }
+
+    delete_matrix(aux_matrix);
+}
+
 void swap_matrix_pointers(Matrix **a, Matrix **b)
 {
     Matrix *aux = *a;

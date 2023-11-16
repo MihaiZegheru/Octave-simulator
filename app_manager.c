@@ -104,3 +104,18 @@ void sort_matrix_array_task(MatrixArray *matrix_array)
 {
     quick_sort(matrix_array->matrices, matrix_array->matrices + matrix_array->size - 1, cmp_matrices_ascending);
 }
+
+void transpose_matrix_task(MatrixArray *matrix_array)
+{
+    unsigned int index;
+    scanf("%d", &index);
+
+    Matrix *matrix = get_matrix_by_index(index, matrix_array);
+
+    if (matrix == NULL) {
+        printf("No matrix with the given index\n");
+        return;
+    }
+
+    transpose_matrix(matrix);
+}
