@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.ejs": "html",
-        "matrix.h": "c"
+        "matrix.h": "c",
+        "matrix_array.h": "c"
     }
 }

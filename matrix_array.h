@@ -15,7 +15,7 @@ typedef struct {
 MatrixArray *new_matrix_array(unsigned int starting_capacity);
 void delete_matrix_array(MatrixArray *matrix_array);
 
-Matrix *add_matrix(MatrixArray *matrix_array);
+void add_matrix(Matrix *matrix, MatrixArray *matrix_array);
 Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array);
 
 void double_matrix_array_capacity(MatrixArray *matrix_array);

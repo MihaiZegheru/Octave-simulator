@@ -46,6 +46,8 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
 
     resize_matrix(new_size_n, new_size_m, matrix);
 
+        // printf("BB");
+
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             matrix->values[i][j] = aux_matrix->values[i][j];
