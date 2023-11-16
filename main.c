@@ -11,7 +11,6 @@ int main(void)
     setbuf(stdout, NULL);
     MatrixArray *matrix_array = new_matrix_array(0);
 
-    printf("%p\n", matrix_array);
     while (1) {
         char cmd;
         scanf("%c", &cmd);
@@ -30,6 +29,9 @@ int main(void)
         }
         if (cmd == 'M') {
             multiply_matrices_task(matrix_array);
+        }
+        if (cmd == 'O') {
+            sort_matrix_array_task(matrix_array);
         }
     }
 

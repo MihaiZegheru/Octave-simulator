@@ -81,6 +81,13 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
     return result;
 }
 
+void swap_matrix_pointers(Matrix **a, Matrix **b)
+{
+    Matrix *aux = *a;
+    *a = *b;
+    *b = aux;
+}
+
 void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *matrix)
 {
     matrix->size_n = new_size_n;
@@ -97,4 +104,35 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *mat
             // err
         }
     }
+}
+
+int compute_elements_sum(const Matrix *matrix)
+{
+    int sum = 0;
+
+    for (unsigned int i = 0; i < matrix->size_n; i++) {
+        for (unsigned int j = 0; j < matrix->size_m; j++) {
+            sum += matrix->values[i][j]; // TODO: add modulo
+        }
+    }
+
+    return sum;
+}
+
+int cmp_matrices_ascending(const Matrix *a, const Matrix *b)
+{
+    if (compute_elements_sum(a) < compute_elements_sum(b)) {
+        return 1;
+    }
+
+    return 0;
+}
+
+int cmp_matrices_descending(const Matrix *a, const Matrix *b)
+{
+    if (compute_elements_sum(a) > compute_elements_sum(b)) {
+        return 1;
+    }
+
+    return 0;
 }

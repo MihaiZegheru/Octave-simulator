@@ -99,3 +99,8 @@ void multiply_matrices_task(MatrixArray *matrix_array)
 
     add_matrix(result, matrix_array);
 }
+
+void sort_matrix_array_task(MatrixArray *matrix_array)
+{
+    quick_sort(matrix_array->matrices, matrix_array->matrices + matrix_array->size - 1);
+}
