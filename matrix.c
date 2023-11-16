@@ -46,8 +46,6 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
 
     resize_matrix(new_size_n, new_size_m, matrix);
 
-        // printf("BB");
-
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             matrix->values[i][j] = aux_matrix->values[i][j];
@@ -55,6 +53,32 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
     }
 
     delete_matrix(aux_matrix);
+}
+
+Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
+{
+    if (matrix_a->size_m != matrix_b->size_n) {
+        return NULL;
+    }
+
+    unsigned int common_size = matrix_a->size_m;
+    unsigned int new_size_n = matrix_a->size_n;
+    unsigned int new_size_m = matrix_b->size_m;
+
+    Matrix *result = new_matrix(new_size_n, new_size_m);
+
+    for (unsigned int i = 0; i < new_size_n; i++) {
+        for (unsigned int j = 0; j < new_size_m; j++) {
+            int sum = 0;
+            for (unsigned int k = 0; k < common_size; k++) {
+                sum += matrix_a->values[i][k] * matrix_b->values[k][j]; // TODO: add modulo
+            }
+
+            result->values[i][j] = sum;
+        }
+    }
+
+    return result;
 }
 
 void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *matrix)

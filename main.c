@@ -28,6 +28,9 @@ int main(void)
         if (cmd == 'C') {
             resize_matrix_task(matrix_array);
         }
+        if (cmd == 'M') {
+            multiply_matrices_task(matrix_array);
+        }
     }
 
     delete_matrix_array(matrix_array);
