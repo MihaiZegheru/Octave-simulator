@@ -38,13 +38,22 @@ void add_matrix(Matrix *matrix, MatrixArray *matrix_array)
     matrix_array->size++;
 }
 
-Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array)
+Matrix *get_matrix_by_value(unsigned int index, MatrixArray *matrix_array)
 {
     if (matrix_array->size == 0 || index > matrix_array->size - 1) {
         return NULL;
     }
     
     return matrix_array->matrices[index];
+}
+
+Matrix **get_matrix_by_reference(unsigned int index, MatrixArray *matrix_array)
+{
+    if (matrix_array->size == 0 || index > matrix_array->size - 1) {
+        return NULL;
+    }
+    
+    return &matrix_array->matrices[index];
 }
 
 Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *))

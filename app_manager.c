@@ -11,7 +11,7 @@ void print_matrix_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%u", &index);
 
-    Matrix *matrix = get_matrix_by_index(index, matrix_array);
+    Matrix *matrix = get_matrix_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -24,7 +24,7 @@ void print_matrix_dimensions_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%u", &index);
 
-    Matrix *matrix = get_matrix_by_index(index, matrix_array);
+    Matrix *matrix = get_matrix_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -63,7 +63,7 @@ void resize_matrix_task(MatrixArray *matrix_array)
         col_indexes[i]--;
     }
 
-    Matrix *matrix = get_matrix_by_index(index, matrix_array);
+    Matrix *matrix = get_matrix_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
 
@@ -82,12 +82,12 @@ void multiply_matrices_task(MatrixArray *matrix_array)
 {
     unsigned int index_a, index_b;
     scanf("%d%d", &index_a, &index_b);
-    Matrix *matrix_a = get_matrix_by_index(index_a, matrix_array);
+    Matrix *matrix_a = get_matrix_by_value(index_a, matrix_array);
     if (matrix_a == NULL) {
         printf("No matrix with the given index");
     }
     
-    Matrix *matrix_b = get_matrix_by_index(index_b, matrix_array);
+    Matrix *matrix_b = get_matrix_by_value(index_b, matrix_array);
     if (matrix_b == NULL) {
         printf("No matrix with the given index");
     }
@@ -110,12 +110,39 @@ void transpose_matrix_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%d", &index);
 
-    Matrix *matrix = get_matrix_by_index(index, matrix_array);
-
+    Matrix *matrix = get_matrix_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
     }
 
     transpose_matrix(matrix);
+}
+
+void pow_raise_matrix_task(MatrixArray *matrix_array)
+{
+    unsigned int index;
+    scanf("%u", &index);
+
+    int power;
+    scanf("%d", &power);
+    if (power < 0) {
+        printf("Power should be positive\n");
+        return;
+    }
+
+    Matrix **matrix = get_matrix_by_reference(index, matrix_array);
+    if (matrix == NULL) {
+        printf("No matrix with the given index\n");
+        return;
+    }
+
+    if ((*matrix)->size_n != (*matrix)->size_m) {
+        printf("Cannot perform matrix multiplication\n");
+        return;
+    }
+
+    power_raise_matrix((unsigned int)power, matrix);
+
+    print_matrix(*matrix);
 }

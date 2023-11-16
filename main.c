@@ -36,6 +36,9 @@ int main(void)
         if (cmd == 'T') {
             transpose_matrix_task(matrix_array);
         }
+        if (cmd == 'R') {
+            pow_raise_matrix_task(matrix_array);
+        }
     }
 
     delete_matrix_array(matrix_array);

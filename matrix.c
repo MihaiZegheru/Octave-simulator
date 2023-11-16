@@ -1,5 +1,7 @@
 #include "matrix.h"
 
+#include "io_utils.h" // TO BE DELETED
+
 Matrix *new_matrix(unsigned int size_n, unsigned int size_m)
 {
     Matrix *matrix = malloc(sizeof(Matrix));
@@ -103,6 +105,49 @@ void transpose_matrix(Matrix *matrix)
     }
 
     delete_matrix(aux_matrix);
+}
+
+void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, Matrix **result_matrix)
+{
+    if (power == 0) {
+        for (unsigned int i = 0; i < matrix->size_n; i++) {
+            for (unsigned int j = 0; j < matrix->size_m; j++) {
+                if (i == j) {
+                    (*result_matrix)->values[i][j] = 1;
+                }
+                else {
+                    (*result_matrix)->values[i][j] = 0;
+                }
+            }
+        }
+
+        return;
+    }
+
+    if (power % 2) {
+        recursive_power_raise_matrix(power - 1, matrix, result_matrix);
+        Matrix *new_matrix = multiply_matrices(matrix, *result_matrix);
+
+        delete_matrix(*result_matrix);
+        *result_matrix = new_matrix;
+    }
+    else {
+        recursive_power_raise_matrix(power / 2, matrix, result_matrix);
+        Matrix *new_matrix = multiply_matrices(*result_matrix, *result_matrix);
+
+        delete_matrix(*result_matrix);
+        *result_matrix = new_matrix;
+    }
+}
+
+void power_raise_matrix(unsigned int power, Matrix **matrix)
+{
+    Matrix *result_matrix = new_matrix((*matrix)->size_n, (*matrix)->size_m);
+    recursive_power_raise_matrix(power, *matrix, &result_matrix);
+
+    delete_matrix(*matrix);
+    *matrix = result_matrix;
+        print_matrix(*matrix);
 }
 
 void swap_matrix_pointers(Matrix **a, Matrix **b)
