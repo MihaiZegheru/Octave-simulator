@@ -146,3 +146,28 @@ void pow_raise_matrix_task(MatrixArray *matrix_array)
 
     print_matrix(*matrix);
 }
+
+void remove_matrix_task(MatrixArray *matrix_array)
+{
+    unsigned int index;
+    scanf("%u", &index);
+
+    Matrix **matrix = get_matrix_by_reference(index, matrix_array);
+    if (matrix == NULL) {
+        printf("No matrix with the given index\n");
+        return;
+    }
+
+    remove_matrix(index, matrix_array);
+}
+
+void quit(MatrixArray *matrix_array)
+{
+    for (unsigned int i = 0; i < matrix_array->size; i++) {
+        delete_matrix(get_matrix_by_value(i, matrix_array));
+    }
+
+    delete_matrix_array(matrix_array);
+    
+    exit(0);
+}

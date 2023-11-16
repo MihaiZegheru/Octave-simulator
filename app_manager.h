@@ -16,5 +16,7 @@ void multiply_matrices_task(MatrixArray *matrix_array);
 void sort_matrix_array_task(MatrixArray *matrix_array);
 void transpose_matrix_task(MatrixArray *matrix_array);
 void pow_raise_matrix_task(MatrixArray *matrix_array);
+void remove_matrix_task(MatrixArray *matrix_array);
+void quit(MatrixArray *matrix_array);
 
 #endif

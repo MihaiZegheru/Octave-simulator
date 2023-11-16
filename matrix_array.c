@@ -38,6 +38,26 @@ void add_matrix(Matrix *matrix, MatrixArray *matrix_array)
     matrix_array->size++;
 }
 
+void remove_matrix(unsigned int index, MatrixArray *matrix_array)
+{
+    if (index >= matrix_array->size) {
+        // err
+    }
+
+    Matrix *matrix = get_matrix_by_value(index, matrix_array);
+    delete_matrix(matrix);
+
+    for (unsigned int i = index; i < matrix_array->size; i++) {
+        matrix_array->matrices[i] = matrix_array->matrices[i + 1];
+    }
+
+    matrix_array->size--;
+
+    if (matrix_array->size <= matrix_array->capacity / 2) {
+        half_matrix_array_capacity(matrix_array);
+    }
+}
+
 Matrix *get_matrix_by_value(unsigned int index, MatrixArray *matrix_array)
 {
     if (matrix_array->size == 0 || index > matrix_array->size - 1) {
@@ -99,6 +119,17 @@ void double_matrix_array_capacity(MatrixArray *matrix_array)
         matrix_array->capacity *= 2;
     }
     
+    matrix_array->matrices = realloc(matrix_array->matrices,
+                                     matrix_array->capacity * sizeof(int*));
+
+    if (matrix_array->matrices == NULL) {
+        // err
+    }
+}
+
+void half_matrix_array_capacity(MatrixArray *matrix_array)
+{
+    matrix_array->capacity /= 2;
     matrix_array->matrices = realloc(matrix_array->matrices,
                                      matrix_array->capacity * sizeof(int*));
 

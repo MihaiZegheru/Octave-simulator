@@ -17,28 +17,47 @@ int main(void)
 
         if (cmd == 'L') {
             read_matrix_task(matrix_array);
+            continue;
         }
         if (cmd == 'P') {
             print_matrix_task(matrix_array);
+            continue;
         }
         if (cmd == 'D') {
             print_matrix_dimensions_task(matrix_array);
+            continue;
         }
         if (cmd == 'C') {
             resize_matrix_task(matrix_array);
+            continue;
         }
         if (cmd == 'M') {
             multiply_matrices_task(matrix_array);
+            continue;
         }
         if (cmd == 'O') {
             sort_matrix_array_task(matrix_array);
+            continue;
         }
         if (cmd == 'T') {
             transpose_matrix_task(matrix_array);
+            continue;
         }
         if (cmd == 'R') {
             pow_raise_matrix_task(matrix_array);
+            continue;
         }
+        if (cmd == 'F') {
+            remove_matrix_task(matrix_array);
+            continue;
+        }
+        if (cmd == 'Q') {
+            quit(matrix_array);
+            continue;
+        }
+
+        // printf("Unrecognized command\n");
+        // scanf("%c", &cmd);
     }
 
     delete_matrix_array(matrix_array);
