@@ -47,16 +47,14 @@ Matrix *get_matrix_by_index(unsigned int index, MatrixArray *matrix_array)
     return matrix_array->matrices[index];
 }
 
-Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last)
+Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *))
 {
     while (first - last <= 0) {
-        while (cmp_matrices_ascending(*first, *pivot)) {
-            printf("A\n");
+        while ((*cmp)(*first, *pivot)) {
             first++;
         }
 
-        while (!cmp_matrices_ascending(*last, *pivot)) {
-            printf("B\n");
+        while (!(*cmp)(*last, *pivot)) {
             last--;
         }
 
@@ -70,18 +68,17 @@ Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last)
     return first;
 }
 
-void quick_sort(Matrix **first, Matrix **last)
+void quick_sort(Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *))
 {
-    printf("AAA");
     if (first >= last) {
         return;
     }
 
     Matrix **pivot = first + ((last - first) / 2);
-    Matrix **partition = quick_sort_partition(pivot, first, last);
+    Matrix **partition = quick_sort_partition(pivot, first, last, cmp);
 
-    quick_sort(first, partition - 1);
-    quick_sort(partition, last);
+    quick_sort(first, partition - 1, cmp);
+    quick_sort(partition, last, cmp);
 }
 
 void double_matrix_array_capacity(MatrixArray *matrix_array)

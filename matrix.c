@@ -119,7 +119,7 @@ int compute_elements_sum(const Matrix *matrix)
     return sum;
 }
 
-int cmp_matrices_ascending(const Matrix *a, const Matrix *b)
+short int cmp_matrices_ascending(const Matrix *a, const Matrix *b)
 {
     if (compute_elements_sum(a) < compute_elements_sum(b)) {
         return 1;
@@ -128,7 +128,7 @@ int cmp_matrices_ascending(const Matrix *a, const Matrix *b)
     return 0;
 }
 
-int cmp_matrices_descending(const Matrix *a, const Matrix *b)
+short int cmp_matrices_descending(const Matrix *a, const Matrix *b)
 {
     if (compute_elements_sum(a) > compute_elements_sum(b)) {
         return 1;
