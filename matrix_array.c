@@ -79,11 +79,11 @@ Matrix **get_matrix_by_reference(unsigned int index, MatrixArray *matrix_array)
 Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *))
 {
     while (first - last <= 0) {
-        while ((*cmp)(*first, *pivot)) {
+        while ((*cmp)(*first, *pivot) == 1) {
             first++;
         }
 
-        while (!(*cmp)(*last, *pivot)) {
+        while ((*cmp)(*last, *pivot) == -1) {
             last--;
         }
 
