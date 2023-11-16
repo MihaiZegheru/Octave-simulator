@@ -90,19 +90,25 @@ void transpose_matrix(Matrix *matrix)
 
     Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
 
+    printf("A");
+
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             aux_matrix->values[i][j] = matrix->values[j][i];
         }
     }
-
+printf("A");
     resize_matrix(new_size_n, new_size_m, matrix);
-
+printf("A");
+printf("%d %d ", sizeof(matrix->values), sizeof(matrix->values[0]));
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             matrix->values[i][j] = aux_matrix->values[i][j];
+            printf("%d ", matrix->values[i][j]);
         }
+        printf("\n");
     }
+    printf("A");
 
     delete_matrix(aux_matrix);
 }
@@ -169,8 +175,13 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *mat
 
     for (unsigned int i = 0; i < new_size_n; i++) {
         matrix->values[i] = realloc(matrix->values[i], new_size_m * sizeof(int));
+
         if (matrix->values[i] == NULL) {
-            // err
+            matrix->values[i] = malloc(new_size_m * sizeof(int));
+
+            if (matrix->values[i] == NULL) {
+                // err
+            }
         }
     }
 }

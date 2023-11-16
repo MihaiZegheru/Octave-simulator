@@ -82,6 +82,7 @@ void multiply_matrices_task(MatrixArray *matrix_array)
 {
     unsigned int index_a, index_b;
     scanf("%d%d", &index_a, &index_b);
+    
     Matrix *matrix_a = get_matrix_by_value(index_a, matrix_array);
     if (matrix_a == NULL) {
         printf("No matrix with the given index");
@@ -117,6 +118,7 @@ void transpose_matrix_task(MatrixArray *matrix_array)
     }
 
     transpose_matrix(matrix);
+    printf("A");
 }
 
 void pow_raise_matrix_task(MatrixArray *matrix_array)
