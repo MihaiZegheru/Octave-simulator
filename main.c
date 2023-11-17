@@ -42,6 +42,7 @@ int main(void)
         }
         if (cmd == 'S') {
             strassen_multiply_matrices_task(matrix_array);
+            continue;
         }
         if (cmd == 'O') {
             sort_matrix_array_task(matrix_array);

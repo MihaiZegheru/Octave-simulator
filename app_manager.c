@@ -42,7 +42,7 @@ void resize_matrix_task(MatrixArray *matrix_array)
 
     unsigned int *row_indexes = malloc(new_size_n * sizeof(int));
     if (row_indexes == NULL) {
-        // err
+        exit(-1);
     }
 
     for (unsigned int i = 0 ; i < new_size_n; i++) {
@@ -54,7 +54,7 @@ void resize_matrix_task(MatrixArray *matrix_array)
 
     unsigned int *col_indexes = malloc(new_size_m * sizeof(int));
     if (col_indexes == NULL) {
-        // err
+        exit(-1);
     }
 
     for (unsigned int i = 0 ; i < new_size_m; i++) {
@@ -114,7 +114,7 @@ void strassen_multiply_matrices_task(MatrixArray *matrix_array)
         printf("No matrix with the given index");
     }
 
-    Matrix *result = strassen_multiply_matrices(matrix_a, matrix_b);
+    Matrix *result = strassen_multiply_pot_matrices(matrix_a, matrix_b);
     if (result == NULL) {
         printf("Cannot perform matrix multiplication");
     }
@@ -139,7 +139,6 @@ void transpose_matrix_task(MatrixArray *matrix_array)
     }
 
     transpose_matrix(matrix);
-    printf("A");
 }
 
 void pow_raise_matrix_task(MatrixArray *matrix_array)
