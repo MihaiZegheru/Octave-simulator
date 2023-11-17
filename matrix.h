@@ -22,5 +22,6 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *mat
 void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, Matrix **result_matrix);
 short int cmp_matrices_ascending(const Matrix *a, const Matrix *b);
 short int cmp_matrices_descending(const Matrix *a, const Matrix *b);
+int modulo(int value);
 
 #endif

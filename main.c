@@ -15,6 +15,11 @@ int main(void)
         char cmd;
         scanf("%c", &cmd);
 
+        if (cmd == ' ' || cmd == '\n')
+        {
+            continue;
+        }
+
         if (cmd == 'L') {
             read_matrix_task(matrix_array);
             continue;
@@ -56,9 +61,12 @@ int main(void)
             continue;
         }
 
-        // printf("Unrecognized command\n");
-        // scanf("%c", &cmd);
+        printf("Unrecognized command\n");
     }
+
+    // TODO 1: add modulo
+    // TODO 2: add unrec cmd
+
 
     delete_matrix_array(matrix_array);
 }

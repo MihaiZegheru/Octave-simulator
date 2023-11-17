@@ -47,7 +47,6 @@ void resize_matrix_task(MatrixArray *matrix_array)
 
     for (unsigned int i = 0 ; i < new_size_n; i++) {
         scanf("%u", &row_indexes[i]);
-        row_indexes[i]--;
     }
 
     unsigned int new_size_m;
@@ -60,7 +59,6 @@ void resize_matrix_task(MatrixArray *matrix_array)
 
     for (unsigned int i = 0 ; i < new_size_m; i++) {
         scanf("%u", &col_indexes[i]);
-        col_indexes[i]--;
     }
 
     Matrix *matrix = get_matrix_by_value(index, matrix_array);

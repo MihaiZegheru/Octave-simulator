@@ -2,6 +2,8 @@
 
 #include "io_utils.h" // TO BE DELETED
 
+#define MODULO 10007
+
 Matrix *new_matrix(unsigned int size_n, unsigned int size_m)
 {
     Matrix *matrix = malloc(sizeof(Matrix));
@@ -11,12 +13,14 @@ Matrix *new_matrix(unsigned int size_n, unsigned int size_m)
     matrix->values = malloc(size_n * sizeof(int*));
     if (matrix->values == NULL) {
         // err
+        printf("ERR");
     }
 
     for (unsigned int i = 0; i < size_n; i++) {
         matrix->values[i] = malloc(size_m * sizeof(int));
         if (matrix->values[i] == NULL) {
             // err
+            printf("ERR");
         }
     }
 
@@ -36,7 +40,7 @@ void delete_matrix(Matrix *matrix)
 void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_indexes, unsigned int *col_indexes, Matrix *matrix)
 {
     Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
-
+    printf("AA");
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             unsigned int index_i = row_indexes[i];
@@ -45,9 +49,9 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
             aux_matrix->values[i][j] = matrix->values[index_i][index_j];
         }
     }
-
+    printf("AA");
     resize_matrix(new_size_n, new_size_m, matrix);
-
+    printf("AA");
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             matrix->values[i][j] = aux_matrix->values[i][j];
@@ -73,7 +77,7 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
         for (unsigned int j = 0; j < new_size_m; j++) {
             int sum = 0;
             for (unsigned int k = 0; k < common_size; k++) {
-                sum += matrix_a->values[i][k] * matrix_b->values[k][j]; // TODO: add modulo
+                sum = modulo(sum + matrix_a->values[i][k] * matrix_b->values[k][j]);
             }
 
             result->values[i][j] = sum;
@@ -90,25 +94,19 @@ void transpose_matrix(Matrix *matrix)
 
     Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
 
-    printf("A");
-
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             aux_matrix->values[i][j] = matrix->values[j][i];
         }
     }
-printf("A");
+
     resize_matrix(new_size_n, new_size_m, matrix);
-printf("A");
-printf("%d %d ", sizeof(matrix->values), sizeof(matrix->values[0]));
+
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             matrix->values[i][j] = aux_matrix->values[i][j];
-            printf("%d ", matrix->values[i][j]);
         }
-        printf("\n");
     }
-    printf("A");
 
     delete_matrix(aux_matrix);
 }
@@ -192,7 +190,7 @@ int compute_elements_sum(const Matrix *matrix)
 
     for (unsigned int i = 0; i < matrix->size_n; i++) {
         for (unsigned int j = 0; j < matrix->size_m; j++) {
-            sum += matrix->values[i][j]; // TODO: add modulo
+            sum = modulo(sum + matrix->values[i][j]);
         }
     }
 
@@ -227,4 +225,15 @@ short int cmp_matrices_descending(const Matrix *a, const Matrix *b)
     }
 
     return 0;
+}
+
+int modulo(int value)
+{
+    value %= MODULO;
+
+    if (value < 0) {
+        return value + MODULO;
+    }
+
+    return value;
 }
