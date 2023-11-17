@@ -40,6 +40,9 @@ int main(void)
             multiply_matrices_task(matrix_array);
             continue;
         }
+        if (cmd == 'S') {
+            strassen_multiply_matrices_task(matrix_array);
+        }
         if (cmd == 'O') {
             sort_matrix_array_task(matrix_array);
             continue;
@@ -63,10 +66,6 @@ int main(void)
 
         printf("Unrecognized command\n");
     }
-
-    // TODO 1: add modulo
-    // TODO 2: add unrec cmd
-
 
     delete_matrix_array(matrix_array);
 }

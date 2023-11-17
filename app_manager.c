@@ -99,6 +99,29 @@ void multiply_matrices_task(MatrixArray *matrix_array)
     add_matrix(result, matrix_array);
 }
 
+void strassen_multiply_matrices_task(MatrixArray *matrix_array)
+{
+    unsigned int index_a, index_b;
+    scanf("%d%d", &index_a, &index_b);
+    
+    Matrix *matrix_a = get_matrix_by_value(index_a, matrix_array);
+    if (matrix_a == NULL) {
+        printf("No matrix with the given index");
+    }
+    
+    Matrix *matrix_b = get_matrix_by_value(index_b, matrix_array);
+    if (matrix_b == NULL) {
+        printf("No matrix with the given index");
+    }
+
+    Matrix *result = strassen_multiply_matrices(matrix_a, matrix_b);
+    if (result == NULL) {
+        printf("Cannot perform matrix multiplication");
+    }
+
+    add_matrix(result, matrix_array);
+}
+
 void sort_matrix_array_task(MatrixArray *matrix_array)
 {
     quick_sort(matrix_array->matrices, matrix_array->matrices + matrix_array->size - 1, cmp_matrices_ascending);
