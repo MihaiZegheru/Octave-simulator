@@ -268,7 +268,7 @@ Matrix *subtract_matrices(Matrix *a, Matrix *b)
     return matrix;
 }
 
-void swap_matrix_pointers(Matrix **a, Matrix **b)
+void swap_matrices(Matrix **a, Matrix **b)
 {
     Matrix *aux = *a;
     *a = *b;

@@ -88,7 +88,7 @@ Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, sho
         }
 
         if (first - last <= 0) {
-            swap_matrix_pointers(first, last);
+            swap_matrices(first, last);
             first++;
             last--;
         }

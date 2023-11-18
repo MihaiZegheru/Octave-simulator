@@ -6,7 +6,18 @@
 
 #include "matrix.h"
 
+/**
+ * @brief Reads a Matrix and returns a Matrix pointer.
+ * 
+ * @return Matrix* 
+ */
 Matrix *read_matrix();
+
+/**
+ * @brief Prints a given Matrix.
+ * 
+ * @param matrix 
+ */
 void print_matrix(Matrix *matrix);
 
 #endif
