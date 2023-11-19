@@ -124,7 +124,9 @@ void strassen_multiply_matrices_task(MatrixArray *matrix_array)
 
 void sort_matrix_array_task(MatrixArray *matrix_array)
 {
-    quick_sort(matrix_array->matrices, matrix_array->matrices + matrix_array->size - 1, cmp_matrices_ascending);
+    quick_sort(matrix_array->matrices,
+               matrix_array->matrices + matrix_array->size - 1,
+               cmp_matrices_ascending);
 }
 
 void transpose_matrix_task(MatrixArray *matrix_array)

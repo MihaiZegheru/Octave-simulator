@@ -61,7 +61,8 @@ void remove_matrix(unsigned int index, MatrixArray *matrix_array);
  * @param matrix_array 
  * @return Matrix* 
  */
-Matrix *get_matrix_pointer_by_value(unsigned int index, MatrixArray *matrix_array);
+Matrix *get_matrix_pointer_by_value(unsigned int index,
+                                    MatrixArray *matrix_array);
 /**
  * @brief Get the Matrix pointer from the array by value at the given index.
  * 
@@ -69,7 +70,8 @@ Matrix *get_matrix_pointer_by_value(unsigned int index, MatrixArray *matrix_arra
  * @param matrix_array 
  * @return Matrix** 
  */
-Matrix **get_matrix_pointer_by_reference(unsigned int index, MatrixArray *matrix_array);
+Matrix **get_matrix_pointer_by_reference(unsigned int index,
+                                         MatrixArray *matrix_array);
 
 /**
  * @brief Partitions the elements in the array in the given range for the
@@ -81,7 +83,8 @@ Matrix **get_matrix_pointer_by_reference(unsigned int index, MatrixArray *matrix
  * @param cmp function used for sorting order
  * @return Matrix** 
  */
-Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *));
+Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last,
+                              short int (*cmp)(const Matrix *, const Matrix *));
 /**
  * @brief Quick sorts the Matrices in the array in the given range
  * 
@@ -89,7 +92,8 @@ Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, sho
  * @param last 
  * @param cmp function used for sorting order
  */
-void quick_sort(Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *));
+void quick_sort(Matrix **first, Matrix **last,
+                short int (*cmp)(const Matrix *, const Matrix *));
 
 /**
  * @brief Doubles the capacity of the given MatrixArray.

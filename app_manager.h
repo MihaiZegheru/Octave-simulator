@@ -44,7 +44,8 @@ void resize_matrix_task(MatrixArray *matrix_array);
 void multiply_matrices_task(MatrixArray *matrix_array);
 
 /**
- * @brief Interface for multiplying matrices from a MatrixArray using Strassen algorithm.
+ * @brief Interface for multiplying matrices from a MatrixArray using Strassen
+ *        algorithm.
  * 
  * @param matrix_array 
  */
