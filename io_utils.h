@@ -14,7 +14,7 @@
 Matrix *read_matrix();
 
 /**
- * @brief Prints a given Matrix.
+ * @brief Prints a Matrix at the given address.
  * 
  * @param matrix 
  */

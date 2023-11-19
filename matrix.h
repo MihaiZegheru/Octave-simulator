@@ -5,12 +5,22 @@
 #include <stdlib.h>
 
 typedef struct {
-    unsigned int size_n, size_m;
+    /**
+     * @brief The number of rows
+     */
+    unsigned int size_n;
+    /**
+     * @brief The number of columns
+     */
+    unsigned int size_m;
+    /**
+     * @brief The values in the matrix
+     */
     int **values;
 } Matrix;
 
 /**
- * @brief Instantiates a new matrix in memory and returns the pointer.
+ * @brief Instantiates a new Matrix in memory and returns the pointer.
  * 
  * @param size_n 
  * @param size_m 
@@ -18,14 +28,14 @@ typedef struct {
  */
 Matrix *new_matrix(unsigned int size_n, unsigned int size_m);
 /**
- * @brief Deletes the given matrix from memory.
+ * @brief Deletes the given Matrix from memory.
  * 
  * @param matrix 
  */
 void delete_matrix(Matrix *matrix);
 
 /**
- * @brief Resizes the given matrix including the intersection of the specified rows and columns.
+ * @brief Resizes the given Matrix including the intersection of the specified rows and columns.
  * 
  * @param new_size_n 
  * @param new_size_m 
@@ -35,7 +45,7 @@ void delete_matrix(Matrix *matrix);
  */
 void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_indexes, unsigned int *col_indexes, Matrix *matrix);
 /**
- * @brief Multiplies two given matrices and returns the new one.
+ * @brief Multiplies two given Matrices and returns the new one.
  * 
  * @param matrix_a 
  * @param matrix_b 
@@ -43,7 +53,7 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
  */
 Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b);
 /**
- * @brief Multiplies two given matrices using Strassen's algorithm and returns a new one.
+ * @brief Multiplies two given Matrices using Strassen's algorithm and returns a new one.
  * 
  * @param matrix_a 
  * @param matrix_b 
@@ -51,13 +61,13 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b);
  */
 Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b);
 /**
- * @brief Transposes the given matrix and saves it at the same address.
+ * @brief Transposes the given Matrix and saves it at the same address.
  * 
  * @param matrix 
  */
 void transpose_matrix(Matrix *matrix);
 /**
- * @brief Interface for raising the given matrix to a power in logarithmic time and saves it at the same address.
+ * @brief Interface for raising the given Matrix to a power in logarithmic time and saves it at the same address.
  * 
  * @param power 
  * @param matrix 
@@ -65,7 +75,7 @@ void transpose_matrix(Matrix *matrix);
 void power_raise_matrix(unsigned int power, Matrix **matrix);
 
 /**
- * @brief Adds two matrices and returns the result as a new matrix.
+ * @brief Adds two Matrices and returns the result as a new Matrix.
  * 
  * @param a 
  * @param b 
@@ -73,7 +83,7 @@ void power_raise_matrix(unsigned int power, Matrix **matrix);
  */
 Matrix *add_matrices(Matrix *a, Matrix *b);
 /**
- * @brief Subtracts two matrices and returns the result as a new matrix.
+ * @brief Subtracts two Matrices and returns the result as a new Matrix.
  * 
  * @param a 
  * @param b 
@@ -81,14 +91,14 @@ Matrix *add_matrices(Matrix *a, Matrix *b);
  */
 Matrix *subtract_matrices(Matrix *a, Matrix *b);
 /**
- * @brief Swaps two matrices.
+ * @brief Swaps two Matrices.
  * 
  * @param a 
  * @param b 
  */
 void swap_matrices(Matrix **a, Matrix **b);
 /**
- * @brief Resizes the given matrix, ignoring the old values.
+ * @brief Resizes the given Matrix, ignoring the old values.
  * 
  * @param new_size_n 
  * @param new_size_m 
@@ -96,7 +106,7 @@ void swap_matrices(Matrix **a, Matrix **b);
  */
 void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *matrix);
 /**
- * @brief Breaks the given matrix in 4 equal square blocks. Returns through parameters.
+ * @brief Breaks the given Matrix in 4 equal square blocks. Returns through parameters.
  * @note The specified matrix must have equal sizes, powers of two.
  * 
  * @param matrix 
@@ -107,7 +117,7 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *mat
  */
 void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c, Matrix **d);
 /**
- * @brief Builds a matrix from 4 smaller blocks. Returns a new matrix.
+ * @brief Builds a Matrix from 4 smaller blocks. Returns a new Matrix.
  * @note The building blocks must all have equal sizes, powers of two.
  * 
  * @param a
@@ -118,7 +128,7 @@ void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c, 
  */
 Matrix *build_matrix_from_blocks(Matrix *a, Matrix *b, Matrix *c, Matrix *d);
 /**
- * @brief The implementation of logarithmic power raising. Returns result matrix as parameter.
+ * @brief The implementation of logarithmic power raising. Returns result Matrix as parameter.
  * 
  * @param power 
  * @param matrix 
@@ -126,7 +136,7 @@ Matrix *build_matrix_from_blocks(Matrix *a, Matrix *b, Matrix *c, Matrix *d);
  */
 void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, Matrix **result_matrix);
 /**
- * @brief Compares sum of matrices. If a < b returns 1, 
+ * @brief Compares sum of Matrices. If a < b returns 1, 
  *        if a > b returns -1, else returns 0.
  * @note Used for sorting algorithms.
  * 
@@ -136,7 +146,7 @@ void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, Matrix **r
  */
 short int cmp_matrices_ascending(const Matrix *a, const Matrix *b);
 /**
- * @brief Compares sum of matrices. If a > b returns 1,
+ * @brief Compares sum of Matrices. If a > b returns 1,
  *        if a < b returns -1, else returns 0.
  * @note Used for sorting algorithms.
  * 

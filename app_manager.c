@@ -11,7 +11,7 @@ void print_matrix_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%u", &index);
 
-    Matrix *matrix = get_matrix_by_value(index, matrix_array);
+    Matrix *matrix = get_matrix_pointer_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -24,7 +24,7 @@ void print_matrix_dimensions_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%u", &index);
 
-    Matrix *matrix = get_matrix_by_value(index, matrix_array);
+    Matrix *matrix = get_matrix_pointer_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -61,7 +61,7 @@ void resize_matrix_task(MatrixArray *matrix_array)
         scanf("%u", &col_indexes[i]);
     }
 
-    Matrix *matrix = get_matrix_by_value(index, matrix_array);
+    Matrix *matrix = get_matrix_pointer_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
 
@@ -81,12 +81,12 @@ void multiply_matrices_task(MatrixArray *matrix_array)
     unsigned int index_a, index_b;
     scanf("%d%d", &index_a, &index_b);
     
-    Matrix *matrix_a = get_matrix_by_value(index_a, matrix_array);
+    Matrix *matrix_a = get_matrix_pointer_by_value(index_a, matrix_array);
     if (matrix_a == NULL) {
         printf("No matrix with the given index");
     }
     
-    Matrix *matrix_b = get_matrix_by_value(index_b, matrix_array);
+    Matrix *matrix_b = get_matrix_pointer_by_value(index_b, matrix_array);
     if (matrix_b == NULL) {
         printf("No matrix with the given index");
     }
@@ -104,12 +104,12 @@ void strassen_multiply_matrices_task(MatrixArray *matrix_array)
     unsigned int index_a, index_b;
     scanf("%d%d", &index_a, &index_b);
     
-    Matrix *matrix_a = get_matrix_by_value(index_a, matrix_array);
+    Matrix *matrix_a = get_matrix_pointer_by_value(index_a, matrix_array);
     if (matrix_a == NULL) {
         printf("No matrix with the given index");
     }
     
-    Matrix *matrix_b = get_matrix_by_value(index_b, matrix_array);
+    Matrix *matrix_b = get_matrix_pointer_by_value(index_b, matrix_array);
     if (matrix_b == NULL) {
         printf("No matrix with the given index");
     }
@@ -132,7 +132,7 @@ void transpose_matrix_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%d", &index);
 
-    Matrix *matrix = get_matrix_by_value(index, matrix_array);
+    Matrix *matrix = get_matrix_pointer_by_value(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -153,7 +153,7 @@ void pow_raise_matrix_task(MatrixArray *matrix_array)
         return;
     }
 
-    Matrix **matrix = get_matrix_by_reference(index, matrix_array);
+    Matrix **matrix = get_matrix_pointer_by_reference(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -174,7 +174,7 @@ void remove_matrix_task(MatrixArray *matrix_array)
     unsigned int index;
     scanf("%u", &index);
 
-    Matrix **matrix = get_matrix_by_reference(index, matrix_array);
+    Matrix **matrix = get_matrix_pointer_by_reference(index, matrix_array);
     if (matrix == NULL) {
         printf("No matrix with the given index\n");
         return;
@@ -186,7 +186,7 @@ void remove_matrix_task(MatrixArray *matrix_array)
 void quit(MatrixArray *matrix_array)
 {
     for (unsigned int i = 0; i < matrix_array->size; i++) {
-        delete_matrix(get_matrix_by_value(i, matrix_array));
+        delete_matrix(get_matrix_pointer_by_value(i, matrix_array));
     }
 
     delete_matrix_array(matrix_array);

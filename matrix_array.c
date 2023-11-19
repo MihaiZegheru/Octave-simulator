@@ -44,7 +44,7 @@ void remove_matrix(unsigned int index, MatrixArray *matrix_array)
         // err
     }
 
-    Matrix *matrix = get_matrix_by_value(index, matrix_array);
+    Matrix *matrix = get_matrix_pointer_by_value(index, matrix_array);
     delete_matrix(matrix);
 
     for (unsigned int i = index; i < matrix_array->size; i++) {
@@ -58,7 +58,7 @@ void remove_matrix(unsigned int index, MatrixArray *matrix_array)
     }
 }
 
-Matrix *get_matrix_by_value(unsigned int index, MatrixArray *matrix_array)
+Matrix *get_matrix_pointer_by_value(unsigned int index, MatrixArray *matrix_array)
 {
     if (matrix_array->size == 0 || index > matrix_array->size - 1) {
         return NULL;
@@ -67,7 +67,7 @@ Matrix *get_matrix_by_value(unsigned int index, MatrixArray *matrix_array)
     return matrix_array->matrices[index];
 }
 
-Matrix **get_matrix_by_reference(unsigned int index, MatrixArray *matrix_array)
+Matrix **get_matrix_pointer_by_reference(unsigned int index, MatrixArray *matrix_array)
 {
     if (matrix_array->size == 0 || index > matrix_array->size - 1) {
         return NULL;
