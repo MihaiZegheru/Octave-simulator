@@ -23,6 +23,10 @@ void delete_matrix_array(MatrixArray *matrix_array)
     free(matrix_array);
 }
 
+// This function offers an interface for adding a matrix to the array.
+// 
+// If the size of the array becomes greater than the capacity, it will firstly
+// double the capacity.
 void add_matrix(Matrix *matrix, MatrixArray *matrix_array)
 {
     if (matrix_array->size + 1 >= matrix_array->capacity) {
@@ -38,6 +42,10 @@ void add_matrix(Matrix *matrix, MatrixArray *matrix_array)
     matrix_array->size++;
 }
 
+// This function offers an interface for removing a matrix from the array.
+// 
+// If the size of the array is less or half the capacity, the capacity will be
+// halved.
 void remove_matrix(unsigned int index, MatrixArray *matrix_array)
 {
     if (index >= matrix_array->size) {
@@ -58,7 +66,8 @@ void remove_matrix(unsigned int index, MatrixArray *matrix_array)
     }
 }
 
-Matrix *get_matrix_pointer_by_value(unsigned int index, MatrixArray *matrix_array)
+Matrix *get_matrix_pointer_by_value(unsigned int index,
+                                    MatrixArray *matrix_array)
 {
     if (matrix_array->size == 0 || index > matrix_array->size - 1) {
         return NULL;
@@ -67,7 +76,8 @@ Matrix *get_matrix_pointer_by_value(unsigned int index, MatrixArray *matrix_arra
     return matrix_array->matrices[index];
 }
 
-Matrix **get_matrix_pointer_by_reference(unsigned int index, MatrixArray *matrix_array)
+Matrix **get_matrix_pointer_by_reference(unsigned int index,
+                                         MatrixArray *matrix_array)
 {
     if (matrix_array->size == 0 || index > matrix_array->size - 1) {
         return NULL;
@@ -76,7 +86,10 @@ Matrix **get_matrix_pointer_by_reference(unsigned int index, MatrixArray *matrix
     return &matrix_array->matrices[index];
 }
 
-Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *))
+// This function represents the core functionality part of the quick sort
+// algorithm. It returns the partition index.
+Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last,
+                              short int (*cmp)(const Matrix *, const Matrix *))
 {
     while (first - last <= 0) {
         while ((*cmp)(*first, *pivot) == 1) {
@@ -97,7 +110,13 @@ Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last, sho
     return first;
 }
 
-void quick_sort(Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, const Matrix *))
+// This function offers the implementation of a quick sort on a matrix array.
+// The quick sort algorithm takes a pivot and it checks for the bigger elements 
+// at its left and for the smaller elements at its right and then swaps them.
+// After all the swaps have been done, it partitions the array into two smaller
+// ones, repeating the algorithm recursively.
+void quick_sort(Matrix **first, Matrix **last,
+                short int (*cmp)(const Matrix *,const Matrix *))
 {
     if (first >= last) {
         return;
@@ -110,6 +129,8 @@ void quick_sort(Matrix **first, Matrix **last, short int (*cmp)(const Matrix *, 
     quick_sort(partition, last, cmp);
 }
 
+// This function takes a matrix array and it doubles the capacity without taking
+// into consideration the already existing values.
 void double_matrix_array_capacity(MatrixArray *matrix_array)
 {
     if (matrix_array->capacity == 0) {
@@ -127,6 +148,8 @@ void double_matrix_array_capacity(MatrixArray *matrix_array)
     }
 }
 
+// This function takes a matrix array and it halves the capacity without taking
+// into consideration the already existing values.
 void half_matrix_array_capacity(MatrixArray *matrix_array)
 {
     matrix_array->capacity /= 2;

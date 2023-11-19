@@ -35,10 +35,21 @@ void delete_matrix(Matrix *matrix)
     free(matrix);
 }
 
-void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_indexes, unsigned int *col_indexes, Matrix *matrix)
+// This function offers an interface for resizing a given matrix to the given 
+// sizes by selecting what values to include in the result and saving it at the
+// same address.
+// 
+// This function firstly creates a new auxilary matrix with the new sizes. It
+// then sets in the values following the rule: it combines the indexes 2 by 2 in
+// the rows array with the ones in the columns array and saves the value at the
+// indexes in the auxilary matrix. After this, the old matrix gets resized to
+// the new values and the contants of the auxilary matrix are moved into the
+// original one. In the end, the auxilary matrix gets deleted.
+void resize(unsigned int new_size_n, unsigned int new_size_m,
+            unsigned int *row_indexes, unsigned int *col_indexes,
+            Matrix *matrix)
 {
     Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
-    printf("AA");
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             unsigned int index_i = row_indexes[i];
@@ -47,9 +58,9 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
             aux_matrix->values[i][j] = matrix->values[index_i][index_j];
         }
     }
-    printf("AA");
+
     resize_matrix(new_size_n, new_size_m, matrix);
-    printf("AA");
+
     for (unsigned int i = 0; i < new_size_n; i++) {
         for (unsigned int j = 0; j < new_size_m; j++) {
             matrix->values[i][j] = aux_matrix->values[i][j];
@@ -59,6 +70,11 @@ void resize(unsigned int new_size_n, unsigned int new_size_m, unsigned int *row_
     delete_matrix(aux_matrix);
 }
 
+// This functions implements basic matrix multiplication.
+// 
+// This function firstly creates a new matrix for storing the resulted matrix.
+// It then performs the operations, adding the resulted values to the new
+// matrix. At the end, it returns the new matrix' pointer.
 Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
 {
     if (matrix_a->size_m != matrix_b->size_n) {
@@ -75,7 +91,8 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
         for (unsigned int j = 0; j < new_size_m; j++) {
             int sum = 0;
             for (unsigned int k = 0; k < common_size; k++) {
-                sum = modulo(sum + matrix_a->values[i][k] * matrix_b->values[k][j]);
+                sum = modulo(sum +
+                             matrix_a->values[i][k] * matrix_b->values[k][j]);
             }
 
             result->values[i][j] = sum;
@@ -85,6 +102,17 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
     return result;
 }
 
+// This function implements matrix multiplication recursively, using Strassen's
+// algorithm. This algorithm is based on the divide et impera at its core,
+// breaking matrices in basic building blocks and then performing operations on
+// them. For simplicity this implementation works only for matrices that have
+// equal sizes that are powers of two.
+// 
+// The function firstly breaks the given matrix into blocks. It then calculates
+// using Strassen's formulas new matrices and then builds back the result of
+// multiplication.
+// The exit condition is reached when the givem matrix becomes a singular block
+// of size one.
 Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b)
 {
     // This implemntation works on matrices that have a size of 2^n
@@ -169,6 +197,13 @@ Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b)
     return result;
 }
 
+// This function transposes a givem matrix and saves it at the same address.
+// 
+// It first creates an auxilary matrix that has the required sizes, so that the
+// new number of rows is equal to the original number of columns and vice verse.
+// It then copies the values respectively into the auxilary matrix and resizes
+// the original matrix. At the end, it copies the values back into the original
+// matrix and deletes the auxilary matrix.
 void transpose_matrix(Matrix *matrix)
 {
     unsigned int new_size_n = matrix->size_m;
@@ -193,7 +228,17 @@ void transpose_matrix(Matrix *matrix)
     delete_matrix(aux_matrix);
 }
 
-void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, Matrix **result_matrix)
+// This function raises a matrix to a power in logarithmic time. It makes use of
+// the mathematical formula a^2n = a^n * a^n. 
+// 
+// If the power is even, it will call itself recursively with the power divided 
+// by two and then multiply the resulted matrices. If the power is odd, it will
+// call itself recursively with the power - 1 and then multiply the result with
+// the original matrix.
+// The exit condition is reached when the power becomes equal to 0. Then, the 
+// function returns the identity matrix.
+void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, 
+                                  Matrix **result_matrix)
 {
     if (power == 0) {
         for (unsigned int i = 0; i < matrix->size_n; i++) {
@@ -226,6 +271,8 @@ void recursive_power_raise_matrix(unsigned int power, Matrix *matrix, Matrix **r
     }
 }
 
+// This function offers an interface for rasising a given matrix to a given
+// power and storing it at the same address.
 void power_raise_matrix(unsigned int power, Matrix **matrix)
 {
     Matrix *result_matrix = new_matrix((*matrix)->size_n, (*matrix)->size_m);
@@ -233,9 +280,9 @@ void power_raise_matrix(unsigned int power, Matrix **matrix)
 
     delete_matrix(*matrix);
     *matrix = result_matrix;
-        print_matrix(*matrix);
 }
 
+// This function adds two given matrices and returns a new one as the result.
 Matrix *add_matrices(Matrix *a, Matrix *b)
 {
     if (a->size_n != b->size_n || a->size_m != b->size_m) {
@@ -252,6 +299,8 @@ Matrix *add_matrices(Matrix *a, Matrix *b)
     return matrix;
 }
 
+// This function substracts two given matrices and returns a new one as the
+// result.
 Matrix *subtract_matrices(Matrix *a, Matrix *b)
 {
     if (a->size_n != b->size_n || a->size_m != b->size_m) {
@@ -268,6 +317,7 @@ Matrix *subtract_matrices(Matrix *a, Matrix *b)
     return matrix;
 }
 
+// This functions swaps two matrices' pointers.
 void swap_matrices(Matrix **a, Matrix **b)
 {
     Matrix *aux = *a;
@@ -275,7 +325,10 @@ void swap_matrices(Matrix **a, Matrix **b)
     *b = aux;
 }
 
-void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *matrix)
+// This function resizes a matrix by the given sizes. It does not take into
+// account the already existing values in the matrix.
+void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
+                   Matrix *matrix)
 {
     matrix->size_n = new_size_n;
     matrix->size_m = new_size_m;
@@ -286,7 +339,8 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *mat
     }
 
     for (unsigned int i = 0; i < new_size_n; i++) {
-        matrix->values[i] = realloc(matrix->values[i], new_size_m * sizeof(int));
+        matrix->values[i] = realloc(matrix->values[i], 
+                                    new_size_m * sizeof(int));
 
         if (matrix->values[i] == NULL) {
             matrix->values[i] = malloc(new_size_m * sizeof(int));
@@ -298,7 +352,8 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m, Matrix *mat
     }
 }
 
-void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c, Matrix **d)
+void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c,
+                            Matrix **d)
 {
     unsigned int new_size_n = matrix->size_n / 2;
     unsigned int new_size_m = matrix->size_m / 2;
