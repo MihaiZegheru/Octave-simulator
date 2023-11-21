@@ -10,7 +10,7 @@ int main(void)
 {
     setbuf(stdout, NULL);
     MatrixArray *matrix_array = new_matrix_array(0);
-
+    
     while (1) {
         char cmd;
         scanf("%c", &cmd);
@@ -25,15 +25,15 @@ int main(void)
             continue;
         }
         if (cmd == 'P') {
-            print_matrix_task(matrix_array);
+            print_matrix_task(matrix_array);           
             continue;
         }
         if (cmd == 'D') {
-            print_matrix_dimensions_task(matrix_array);
+            print_matrix_dimensions_task(matrix_array);           
             continue;
         }
         if (cmd == 'C') {
-            resize_matrix_task(matrix_array);
+            resize_matrix_task(matrix_array);           
             continue;
         }
         if (cmd == 'M') {

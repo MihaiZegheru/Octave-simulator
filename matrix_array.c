@@ -33,11 +33,6 @@ void add_matrix(Matrix *matrix, MatrixArray *matrix_array)
         double_matrix_array_capacity(matrix_array);
     }
 
-    matrix_array->matrices[matrix_array->size] = malloc(sizeof(Matrix *));
-    if (matrix_array->matrices[matrix_array->size] == NULL) {
-        exit(-1);
-    }
-
     matrix_array->matrices[matrix_array->size] = matrix;
     matrix_array->size++;
 }
@@ -153,9 +148,13 @@ void double_matrix_array_capacity(MatrixArray *matrix_array)
 void half_matrix_array_capacity(MatrixArray *matrix_array)
 {
     matrix_array->capacity /= 2;
+    if(matrix_array->capacity == 0) {
+        matrix_array->capacity = 1;
+    }
+    
     matrix_array->matrices = realloc(matrix_array->matrices,
                                      matrix_array->capacity * sizeof(int*));
-
+    
     if (matrix_array->matrices == NULL) {
         exit(-1);
     }

@@ -144,6 +144,14 @@ Matrix *build_matrix_from_blocks(Matrix *a, Matrix *b, Matrix *c, Matrix *d);
 void recursive_power_raise_matrix(unsigned int power, Matrix *matrix,
                                   Matrix **result_matrix);
 /**
+ * @brief Calculates the sum of all the elements of the matrix.
+ * @note The sum is modulo.
+ * 
+ * @param *matrix: 
+ * @return int
+ */
+int compute_elements_sum(const Matrix *matrix);
+/**
  * @brief Compares sum of Matrices. If a < b returns 1, 
  *        if a > b returns -1, else returns 0.
  * @note Used for sorting algorithms.

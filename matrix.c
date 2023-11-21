@@ -136,7 +136,7 @@ Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b)
     delete_matrix(add_b1_b4);
     delete_matrix(add_a1_a4);
 
-    Matrix *add_a3_a4 = add_matrices(a1, a4);
+    Matrix *add_a3_a4 = add_matrices(a3, a4);
     Matrix *m2 = strassen_multiply_pot_matrices(add_a3_a4, b1);
     delete_matrix(add_a3_a4);
 
@@ -224,7 +224,7 @@ void transpose_matrix(Matrix *matrix)
             matrix->values[i][j] = aux_matrix->values[i][j];
         }
     }
-
+    
     delete_matrix(aux_matrix);
 }
 
@@ -327,9 +327,16 @@ void swap_matrices(Matrix **a, Matrix **b)
 
 // This function resizes a matrix by the given sizes. It does not take into
 // account the already existing values in the matrix.
+// 
+// This function firstly clears all the memory that would exceed the new bounds
+// and then in reallocates or allocates the new memory.
 void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
                    Matrix *matrix)
 {
+    for (unsigned int i = 0; i < matrix->size_n; i++) {
+        free(matrix->values[i]);
+    }
+
     matrix->size_n = new_size_n;
     matrix->size_m = new_size_m;
 
@@ -339,15 +346,16 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
     }
 
     for (unsigned int i = 0; i < new_size_n; i++) {
-        matrix->values[i] = realloc(matrix->values[i], 
-                                    new_size_m * sizeof(int));
-
+        matrix->values[i] = malloc(new_size_m * sizeof(int));
+        continue;
         if (matrix->values[i] == NULL) {
-            matrix->values[i] = malloc(new_size_m * sizeof(int));
-
             if (matrix->values[i] == NULL) {
                 // err
             }
+        }
+        else {
+            matrix->values[i] = realloc(matrix->values[i], 
+                                        new_size_m * sizeof(int));
         }
     }
 }

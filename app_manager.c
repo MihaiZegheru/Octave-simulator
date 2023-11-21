@@ -83,17 +83,20 @@ void multiply_matrices_task(MatrixArray *matrix_array)
     
     Matrix *matrix_a = get_matrix_pointer_by_value(index_a, matrix_array);
     if (matrix_a == NULL) {
-        printf("No matrix with the given index");
+        printf("No matrix with the given index\n");
+        return;
     }
     
     Matrix *matrix_b = get_matrix_pointer_by_value(index_b, matrix_array);
     if (matrix_b == NULL) {
-        printf("No matrix with the given index");
+        printf("No matrix with the given index\n");
+        return;
     }
 
     Matrix *result = multiply_matrices(matrix_a, matrix_b);
     if (result == NULL) {
-        printf("Cannot perform matrix multiplication");
+        printf("Cannot perform matrix multiplication\n");
+        return;
     }
 
     add_matrix(result, matrix_array);
@@ -106,17 +109,20 @@ void strassen_multiply_matrices_task(MatrixArray *matrix_array)
     
     Matrix *matrix_a = get_matrix_pointer_by_value(index_a, matrix_array);
     if (matrix_a == NULL) {
-        printf("No matrix with the given index");
+        printf("No matrix with the given index\n");
+        return;
     }
     
     Matrix *matrix_b = get_matrix_pointer_by_value(index_b, matrix_array);
     if (matrix_b == NULL) {
-        printf("No matrix with the given index");
+        printf("No matrix with the given index\n");
+        return;
     }
 
     Matrix *result = strassen_multiply_pot_matrices(matrix_a, matrix_b);
     if (result == NULL) {
-        printf("Cannot perform matrix multiplication");
+        printf("Cannot perform matrix multiplication\n");
+        return;
     }
 
     add_matrix(result, matrix_array);
@@ -167,8 +173,6 @@ void pow_raise_matrix_task(MatrixArray *matrix_array)
     }
 
     power_raise_matrix((unsigned int)power, matrix);
-
-    print_matrix(*matrix);
 }
 
 void remove_matrix_task(MatrixArray *matrix_array)

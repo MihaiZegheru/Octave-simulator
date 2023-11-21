@@ -2,7 +2,8 @@
 
 Matrix *read_matrix()
 {
-    // This does not check for mistakes in input
+    // Does not check for mistakes in input
+    
     unsigned int size_n, size_m;
     scanf("%u%u", &size_n, &size_m);
 
