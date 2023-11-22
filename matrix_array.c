@@ -86,23 +86,37 @@ Matrix **get_matrix_pointer_by_reference(unsigned int index,
 Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last,
                               short int (*cmp)(const Matrix *, const Matrix *))
 {
-    while (first - last <= 0) {
-        while ((*cmp)(*first, *pivot) == 1) {
-            first++;
-        }
+    // while (first - last <= 0) {
+    //     while ((*cmp)(*first, *pivot) == 1) {
+    //         first++;
+    //     }
 
-        while ((*cmp)(*last, *pivot) == -1) {
-            last--;
-        }
+    //     while ((*cmp)(*last, *pivot) == -1) {
+    //         last--;
+    //     }
 
-        if (first - last <= 0) {
-            swap_matrices(first, last);
-            first++;
-            last--;
+    //     if (first - last <= 0) {
+    //         swap_matrices(first, last);
+    //         first++;
+    //         last--;
+    //     }
+    // }
+
+    // return first;
+
+    pivot = last;
+
+    Matrix **i = first - 1;
+
+    for (Matrix **j = first; j - last < 0; j++) {
+        if ((*cmp)(*j, *pivot) <= 0) {
+            i++;
+            swap_matrices(i, j);
         }
     }
-
-    return first;
+    swap(i + 1, last);
+    return i + 1;
+    
 }
 
 // This function offers the implementation of a quick sort on a matrix array.
@@ -121,7 +135,7 @@ void quick_sort(Matrix **first, Matrix **last,
     Matrix **partition = quick_sort_partition(pivot, first, last, cmp);
 
     quick_sort(first, partition - 1, cmp);
-    quick_sort(partition, last, cmp);
+    quick_sort(partition + 1, last, cmp);
 }
 
 // This function takes a matrix array and it doubles the capacity without taking
