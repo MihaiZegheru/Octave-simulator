@@ -1,5 +1,7 @@
 #include "matrix.h"
 
+#include "m_math.c"
+
 matrix_t *matrix_strassen_compute_m1(matrix_t *a1, matrix_t *a4, matrix_t *b1, 
                                      matrix_t *b4)
 {
