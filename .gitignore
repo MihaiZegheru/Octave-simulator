@@ -54,3 +54,19 @@ dkms.conf
 
 # VS Code
 .vscode
+
+# Homework checker
+check_utils
+cs
+tasks
+.checkpatch-camelcase.git.
+check
+*.sh
+README.md
+
+# Homework executable
+my_octave
+
+# Testing
+in
+out

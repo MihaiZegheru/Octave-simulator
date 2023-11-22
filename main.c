@@ -8,65 +8,64 @@
 
 int main(void)
 {
-    setbuf(stdout, NULL);
-    MatrixArray *matrix_array = new_matrix_array(0);
-    
-    while (1) {
-        char cmd;
-        scanf("%c", &cmd);
+	setbuf(stdout, NULL);
+	MatrixArray *matrix_array = new_matrix_array(0);
 
-        if (cmd == ' ' || cmd == '\n')
-        {
-            continue;
-        }
+	while (1) {
+		char cmd;
+		scanf("%c", &cmd);
 
-        if (cmd == 'L') {
-            read_matrix_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'P') {
-            print_matrix_task(matrix_array);           
-            continue;
-        }
-        if (cmd == 'D') {
-            print_matrix_dimensions_task(matrix_array);           
-            continue;
-        }
-        if (cmd == 'C') {
-            resize_matrix_task(matrix_array);           
-            continue;
-        }
-        if (cmd == 'M') {
-            multiply_matrices_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'S') {
-            strassen_multiply_matrices_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'O') {
-            sort_matrix_array_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'T') {
-            transpose_matrix_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'R') {
-            pow_raise_matrix_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'F') {
-            remove_matrix_task(matrix_array);
-            continue;
-        }
-        if (cmd == 'Q') {
-            quit(matrix_array);
-            continue;
-        }
+		if (cmd == ' ' || cmd == '\n') {
+			continue;
+		}
 
-        printf("Unrecognized command\n");
-    }
+		if (cmd == 'L') {
+			read_matrix_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'P') {
+			print_matrix_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'D') {
+			print_matrix_dimensions_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'C') {
+			resize_matrix_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'M') {
+			multiply_matrices_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'S') {
+			strassen_multiply_matrices_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'O') {
+			sort_matrix_array_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'T') {
+			transpose_matrix_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'R') {
+			pow_raise_matrix_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'F') {
+			remove_matrix_task(matrix_array);
+			continue;
+		}
+		if (cmd == 'Q') {
+			quit(matrix_array);
+			continue;
+		}
 
-    delete_matrix_array(matrix_array);
+		printf("Unrecognized command\n");
+	}
+
+	delete_matrix_array(matrix_array);
 }

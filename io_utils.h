@@ -8,15 +8,15 @@
 
 /**
  * @brief Reads a Matrix and returns a Matrix pointer.
- * 
- * @return Matrix* 
+ *
+ * @return Matrix*
  */
 Matrix *read_matrix();
 
 /**
  * @brief Prints a Matrix at the given address.
- * 
- * @param matrix 
+ *
+ * @param matrix
  */
 void print_matrix(Matrix *matrix);
 
