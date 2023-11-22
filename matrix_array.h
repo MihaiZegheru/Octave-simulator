@@ -84,7 +84,7 @@ Matrix **get_matrix_pointer_by_reference(unsigned int index,
  * @return Matrix** 
  */
 Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last,
-                              short int (*cmp)(const Matrix *, const Matrix *));
+                              int (*cmp)(const Matrix *, const Matrix *));
 /**
  * @brief Quick sorts the Matrices in the array in the given range
  * 
@@ -93,7 +93,7 @@ Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last,
  * @param cmp function used for sorting order
  */
 void quick_sort(Matrix **first, Matrix **last,
-                short int (*cmp)(const Matrix *, const Matrix *));
+                int (*cmp)(const Matrix *, const Matrix *));
 
 /**
  * @brief Doubles the capacity of the given MatrixArray.

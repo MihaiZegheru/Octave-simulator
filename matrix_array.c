@@ -84,48 +84,33 @@ Matrix **get_matrix_pointer_by_reference(unsigned int index,
 // This function represents the core functionality part of the quick sort
 // algorithm. It returns the partition index.
 Matrix **quick_sort_partition(Matrix **pivot, Matrix **first, Matrix **last,
-                              short int (*cmp)(const Matrix *, const Matrix *))
+                              int (*cmp)(const Matrix *, const Matrix *))
 {
-    // while (first - last <= 0) {
-    //     while ((*cmp)(*first, *pivot) == 1) {
-    //         first++;
-    //     }
-
-    //     while ((*cmp)(*last, *pivot) == -1) {
-    //         last--;
-    //     }
-
-    //     if (first - last <= 0) {
-    //         swap_matrices(first, last);
-    //         first++;
-    //         last--;
-    //     }
-    // }
-
-    // return first;
-
+    // TODO: Add pivot randomisation and change quick sort implementation for
+    //       better optimisation
     pivot = last;
+    Matrix **iterator_1 = first;
 
-    Matrix **i = first - 1;
+    for (Matrix **iterator_2 = first; iterator_2 < last; iterator_2++) {
+        if ((*cmp)(*iterator_2, *pivot) <= 0) {
+            swap_matrices(iterator_1, iterator_2);
 
-    for (Matrix **j = first; j - last < 0; j++) {
-        if ((*cmp)(*j, *pivot) <= 0) {
-            i++;
-            swap_matrices(i, j);
+            iterator_1++;
         }
     }
-    swap(i + 1, last);
-    return i + 1;
+
+    swap_matrices(iterator_1, last);
     
+    return iterator_1;
 }
 
 // This function offers the implementation of a quick sort on a matrix array.
-// The quick sort algorithm takes a pivot and it checks for the bigger elements 
-// at its left and for the smaller elements at its right and then swaps them.
-// After all the swaps have been done, it partitions the array into two smaller
-// ones, repeating the algorithm recursively.
+// This quick sort algorithm picks a pivot at the last position. It then 
+// iterates (second iterator) through the elements in the partition and swaps 
+// them if the second iterator points to a bigger value than the pivot. It then
+// increses the first iterator.
 void quick_sort(Matrix **first, Matrix **last,
-                short int (*cmp)(const Matrix *,const Matrix *))
+                int (*cmp)(const Matrix *, const Matrix *))
 {
     if (first >= last) {
         return;
@@ -135,7 +120,7 @@ void quick_sort(Matrix **first, Matrix **last,
     Matrix **partition = quick_sort_partition(pivot, first, last, cmp);
 
     quick_sort(first, partition - 1, cmp);
-    quick_sort(partition + 1, last, cmp);
+    quick_sort(partition, last, cmp);
 }
 
 // This function takes a matrix array and it doubles the capacity without taking
