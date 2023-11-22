@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "math_utils.h"
+
 typedef struct {
 	/**
 	 * @brief The number of rows
@@ -17,26 +19,26 @@ typedef struct {
 	 * @brief The values in the matrix
 	 */
 	int **values;
-} Matrix;
+} matrix_t;
 
 /**
- * @brief Instantiates a new Matrix in memory and returns the pointer.
+ * @brief Instantiates a new matrix_t in memory and returns the pointer.
  *
  * @param size_n
  * @param size_m
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *new_matrix(unsigned int size_n, unsigned int size_m);
+matrix_t *matrix_new(unsigned int size_n, unsigned int size_m);
 
 /**
- * @brief Deletes the given Matrix from memory.
+ * @brief Deletes the given matrix_t from memory.
  *
  * @param matrix
  */
-void delete_matrix(Matrix *matrix);
+void matrix_delete(matrix_t *matrix);
 
 /**
- * @brief Resizes the given Matrix including the intersection of the specified
+ * @brief Resizes the given matrix_t including the intersection of the specified
  *        rows and columns.
  *
  * @param new_size_n
@@ -45,18 +47,18 @@ void delete_matrix(Matrix *matrix);
  * @param col_indexes array with column indexes to include
  * @param matrix
  */
-void resize(unsigned int new_size_n, unsigned int new_size_m,
+void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
 			unsigned int *row_indexes, unsigned int *col_indexes,
-			Matrix *matrix);
+			matrix_t *matrix);
 
 /**
  * @brief Multiplies two given Matrices and returns the new one.
  *
  * @param matrix_a
  * @param matrix_b
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b);
+matrix_t *matrix_multiply_matrices(matrix_t *matrix_a, matrix_t *matrix_b);
 
 /**
  * @brief Multiplies two given Matrices using Strassen's algorithm and returns a
@@ -64,43 +66,43 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b);
  *
  * @param matrix_a
  * @param matrix_b
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b);
+matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a, matrix_t *matrix_b);
 
 /**
- * @brief Transposes the given Matrix and saves it at the same address.
+ * @brief Transposes the given matrix_t and saves it at the same address.
  *
  * @param matrix
  */
-void transpose_matrix(Matrix *matrix);
+void matrix_transpose(matrix_t *matrix);
 
 /**
- * @brief Interface for raising the given Matrix to a power in logarithmic time
+ * @brief Interface for raising the given matrix_t to a power in logarithmic time
  *        and saves it at the same address.
  *
  * @param power
  * @param matrix
  */
-void power_raise_matrix(unsigned int power, Matrix **matrix);
+void matrix_power_raise(unsigned int power, matrix_t **matrix);
 
 /**
- * @brief Adds two Matrices and returns the result as a new Matrix.
+ * @brief Adds two Matrices and returns the result as a new matrix_t.
  *
  * @param a
  * @param b
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *add_matrices(Matrix *a, Matrix *b);
+matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b);
 
 /**
- * @brief Subtracts two Matrices and returns the result as a new Matrix.
+ * @brief Subtracts two Matrices and returns the result as a new matrix_t.
  *
  * @param a
  * @param b
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *subtract_matrices(Matrix *a, Matrix *b);
+matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b);
 
 /**
  * @brief Swaps two Matrices.
@@ -108,20 +110,20 @@ Matrix *subtract_matrices(Matrix *a, Matrix *b);
  * @param a
  * @param b
  */
-void swap_matrices(Matrix **a, Matrix **b);
+void matrix_swap_matrices(matrix_t **a, matrix_t **b);
 
 /**
- * @brief Resizes the given Matrix, ignoring the old values.
+ * @brief Resizes the given matrix_t, ignoring the old values.
  *
  * @param new_size_n
  * @param new_size_m
  * @param matrix
  */
-void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
-				   Matrix *matrix);
+void matrix_resize(unsigned int new_size_n, unsigned int new_size_m,
+				   matrix_t *matrix);
 
 /**
- * @brief Breaks the given Matrix in 4 equal square blocks. Returns through
+ * @brief Breaks the given matrix_t in 4 equal square blocks. Returns through
  *		  parameters.
  * @note The specified matrix must have equal sizes, powers of two.
  *
@@ -131,31 +133,31 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
  * @param c returned block matrix address
  * @param d returned block matrix address
  */
-void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c,
-							Matrix **d);
+void matrix_break_in_blocks(matrix_t *matrix, matrix_t **a, matrix_t **b, matrix_t **c,
+							matrix_t **d);
 
 /**
- * @brief Builds a Matrix from 4 smaller blocks. Returns a new Matrix.
+ * @brief Builds a matrix_t from 4 smaller blocks. Returns a new matrix_t.
  * @note The building blocks must all have equal sizes, powers of two.
  *
  * @param a
  * @param b
  * @param c
  * @param d
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *build_matrix_from_blocks(Matrix *a, Matrix *b, Matrix *c, Matrix *d);
+matrix_t *matrix_build_from_blocks(matrix_t *a, matrix_t *b, matrix_t *c, matrix_t *d);
 
 /**
- * @brief The implementation of logarithmic power raising. Returns result Matrix
+ * @brief The implementation of logarithmic power raising. Returns result matrix_t
  *		  as parameter.
  *
  * @param power
  * @param matrix
  * @param result_matrix
  */
-void recursive_power_raise_matrix(unsigned int power, Matrix *matrix,
-								  Matrix **result_matrix);
+void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
+								  matrix_t **result_matrix);
 
 /**
  * @brief Calculates the sum of all the elements of the matrix.
@@ -164,10 +166,10 @@ void recursive_power_raise_matrix(unsigned int power, Matrix *matrix,
  * @param *matrix:
  * @return int
  */
-int compute_elements_sum(const Matrix *matrix);
+int matrix_compute_elements_sum(const matrix_t *matrix);
 
 /**
- * @brief Calculates the difference between Matrix a and Matrix b;
+ * @brief Calculates the difference between matrix_t a and matrix_t b;
  *        if a > b returns -1, else returns 0.
  * @note Used for sorting algorithms.
  *
@@ -175,26 +177,16 @@ int compute_elements_sum(const Matrix *matrix);
  * @param b
  * @return int
  */
-int cmp_matrices_ascending(const Matrix *a, const Matrix *b);
+int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b);
 
 /**
- * @brief Calculates the difference between Matrix b and Matrix a;
+ * @brief Calculates the difference between matrix_t b and matrix_t a;
  * @note Used for sorting algorithms.
  *
  * @param a
  * @param b
  * @return int
  */
-int cmp_matrices_descending(const Matrix *a, const Matrix *b);
-
-/**
- * @brief Applies modulo on given value and returns new value.
- * @note Used for overflow protection.
- * @note MODULO = 10007
- *
- * @param value
- * @return int
- */
-int modulo(int value);
+int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b);
 
 #endif

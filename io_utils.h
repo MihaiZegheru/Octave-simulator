@@ -7,17 +7,17 @@
 #include "matrix.h"
 
 /**
- * @brief Reads a Matrix and returns a Matrix pointer.
+ * @brief Reads a matrix_t and returns a matrix_t pointer.
  *
- * @return Matrix*
+ * @return matrix_t*
  */
-Matrix *read_matrix();
+matrix_t *io_read_matrix();
 
 /**
- * @brief Prints a Matrix at the given address.
+ * @brief Prints a matrix_t at the given address.
  *
  * @param matrix
  */
-void print_matrix(Matrix *matrix);
+void io_print_matrix(matrix_t *matrix);
 
 #endif

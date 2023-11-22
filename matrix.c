@@ -1,35 +1,31 @@
 #include "matrix.h"
 
-#include "io_utils.h" // TO BE DELETED
+#include "m_strassen.c"
+#include "m_math.c"
 
-#define MODULO 10007
-
-Matrix *new_matrix(unsigned int size_n, unsigned int size_m)
+matrix_t *matrix_new(unsigned int size_n, unsigned int size_m)
 {
-	Matrix *matrix = malloc(sizeof(Matrix));
+	matrix_t *matrix = malloc(sizeof(matrix_t));
 	matrix->size_n = size_n;
 	matrix->size_m = size_m;
 
 	matrix->values = malloc(size_n * sizeof(int *));
-	if (matrix->values == NULL) {
+	if (!matrix->values)
 		exit(-1);
-	}
 
 	for (unsigned int i = 0; i < size_n; i++) {
 		matrix->values[i] = malloc(size_m * sizeof(int));
-		if (matrix->values[i] == NULL) {
+		if (!matrix->values[i])
 			exit(-1);
-		}
 	}
 
 	return matrix;
 }
 
-void delete_matrix(Matrix *matrix)
+void matrix_delete(matrix_t *matrix)
 {
-	for (unsigned int i = 0; i < matrix->size_n; i++) {
+	for (unsigned int i = 0; i < matrix->size_n; i++)
 		free(matrix->values[i]);
-	}
 
 	free(matrix->values);
 	free(matrix);
@@ -45,11 +41,11 @@ void delete_matrix(Matrix *matrix)
 // indexes in the auxilary matrix. After this, the old matrix gets resized to
 // the new values and the contants of the auxilary matrix are moved into the
 // original one. In the end, the auxilary matrix gets deleted.
-void resize(unsigned int new_size_n, unsigned int new_size_m,
+void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
 			unsigned int *row_indexes, unsigned int *col_indexes,
-			Matrix *matrix)
+			matrix_t *matrix)
 {
-	Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
+	matrix_t *aux_matrix = matrix_new(new_size_n, new_size_m);
 	for (unsigned int i = 0; i < new_size_n; i++) {
 		for (unsigned int j = 0; j < new_size_m; j++) {
 			unsigned int index_i = row_indexes[i];
@@ -59,15 +55,13 @@ void resize(unsigned int new_size_n, unsigned int new_size_m,
 		}
 	}
 
-	resize_matrix(new_size_n, new_size_m, matrix);
+	matrix_resize(new_size_n, new_size_m, matrix);
 
-	for (unsigned int i = 0; i < new_size_n; i++) {
-		for (unsigned int j = 0; j < new_size_m; j++) {
+	for (unsigned int i = 0; i < new_size_n; i++)
+		for (unsigned int j = 0; j < new_size_m; j++)
 			matrix->values[i][j] = aux_matrix->values[i][j];
-		}
-	}
 
-	delete_matrix(aux_matrix);
+	matrix_delete(aux_matrix);
 }
 
 // This functions implements basic matrix multiplication.
@@ -75,25 +69,23 @@ void resize(unsigned int new_size_n, unsigned int new_size_m,
 // This function firstly creates a new matrix for storing the resulted matrix.
 // It then performs the operations, adding the resulted values to the new
 // matrix. At the end, it returns the new matrix' pointer.
-Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
+matrix_t *matrix_multiply_matrices(matrix_t *matrix_a, matrix_t *matrix_b)
 {
-	if (matrix_a->size_m != matrix_b->size_n) {
+	if (matrix_a->size_m != matrix_b->size_n)
 		return NULL;
-	}
 
 	unsigned int common_size = matrix_a->size_m;
 	unsigned int new_size_n = matrix_a->size_n;
 	unsigned int new_size_m = matrix_b->size_m;
 
-	Matrix *result = new_matrix(new_size_n, new_size_m);
+	matrix_t *result = matrix_new(new_size_n, new_size_m);
 
 	for (unsigned int i = 0; i < new_size_n; i++) {
 		for (unsigned int j = 0; j < new_size_m; j++) {
 			int sum = 0;
-			for (unsigned int k = 0; k < common_size; k++) {
-				sum = modulo(sum +
-							 matrix_a->values[i][k] * matrix_b->values[k][j]);
-			}
+			for (unsigned int k = 0; k < common_size; k++)
+				sum = modulo(sum + matrix_a->values[i][k] *
+							 matrix_b->values[k][j]);
 
 			result->values[i][j] = sum;
 		}
@@ -113,97 +105,59 @@ Matrix *multiply_matrices(Matrix *matrix_a, Matrix *matrix_b)
 // multiplication.
 // The exit condition is reached when the givem matrix becomes a singular block
 // of size one.
-Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b)
+matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a,
+												matrix_t *matrix_b)
 {
 	// This implemntation works on matrices that have a size of 2^n
-	if (matrix_a->size_m != matrix_b->size_n) {
+	if (matrix_a->size_m != matrix_b->size_n)
 		return NULL;
-	}
 
-	if (matrix_a->size_n == 1) {
-		return multiply_matrices(matrix_a, matrix_b);
-	}
+	if (matrix_a->size_n == 1)
+		return matrix_multiply_matrices(matrix_a, matrix_b);
 
-	Matrix *a1, *a2, *a3, *a4;
-	break_matrix_in_blocks(matrix_a, &a1, &a2, &a3, &a4);
+	matrix_t *a1, *a2, *a3, *a4;
+	matrix_break_in_blocks(matrix_a, &a1, &a2, &a3, &a4);
 
-	Matrix *b1, *b2, *b3, *b4;
-	break_matrix_in_blocks(matrix_b, &b1, &b2, &b3, &b4);
+	matrix_t *b1, *b2, *b3, *b4;
+	matrix_break_in_blocks(matrix_b, &b1, &b2, &b3, &b4);
 
-	Matrix *add_a1_a4 = add_matrices(a1, a4);
-	Matrix *add_b1_b4 = add_matrices(b1, b4);
-	Matrix *m1 = strassen_multiply_pot_matrices(add_a1_a4, add_b1_b4);
-	delete_matrix(add_b1_b4);
-	delete_matrix(add_a1_a4);
+	matrix_t *m1 = matrix_strassen_compute_m1(a1, a4, b1, b4);
+	matrix_t *m2 = matrix_strassen_compute_m2(a3, a4, b1);
+	matrix_t *m3 = matrix_strassen_compute_m3(a1, b2, b4);
+	matrix_t *m4 = matrix_strassen_compute_m4(a4, b1, b3);	
+	matrix_t *m5 = matrix_strassen_compute_m5(a1, a2, b4);
+	matrix_t *m6 = matrix_strassen_compute_m6(a1, a3, b1, b2);
+	matrix_t *m7 = matrix_strassen_compute_m7(a2, a4, b3, b4);
 
-	Matrix *add_a3_a4 = add_matrices(a3, a4);
-	Matrix *m2 = strassen_multiply_pot_matrices(add_a3_a4, b1);
-	delete_matrix(add_a3_a4);
+	matrix_t *c1 = matrix_strassen_compute_c1(m1, m4, m5, m7);
+	matrix_t *c2 = matrix_strassen_compute_c2(m3, m5);
+	matrix_t *c3 = matrix_strassen_compute_c3(m2, m4);
+	matrix_t *c4 = matrix_strassen_compute_c4(m1, m2, m3, m6);
 
-	Matrix *sub_b2_b4 = subtract_matrices(b2, b4);
-	Matrix *m3 = strassen_multiply_pot_matrices(a1, sub_b2_b4);
-	delete_matrix(sub_b2_b4);
+	matrix_t *result = matrix_build_from_blocks(c1, c2, c3, c4);
 
-	Matrix *sub_b3_b1 = subtract_matrices(b3, b1);
-	Matrix *m4 = strassen_multiply_pot_matrices(a4, sub_b3_b1);
-	delete_matrix(sub_b3_b1);
+	matrix_delete(c1);
+	matrix_delete(c2);
+	matrix_delete(c3);
+	matrix_delete(c4);
 
-	Matrix *add_a1_a2 = add_matrices(a1, a2);
-	Matrix *m5 = strassen_multiply_pot_matrices(add_a1_a2, b4);
-	delete_matrix(add_a1_a2);
+	matrix_delete(m7);
+	matrix_delete(m6);
+	matrix_delete(m5);
+	matrix_delete(m4);
+	matrix_delete(m3);
+	matrix_delete(m2);
+	matrix_delete(m1);
 
-	Matrix *sub_a3_a1 = subtract_matrices(a3, a1);
-	Matrix *add_b1_b2 = add_matrices(b1, b2);
-	Matrix *m6 = strassen_multiply_pot_matrices(sub_a3_a1, add_b1_b2);
-	delete_matrix(add_b1_b2);
-	delete_matrix(sub_a3_a1);
+	matrix_delete(a1);
+	matrix_delete(a2);
+	matrix_delete(a3);
+	matrix_delete(a4);
 
-	Matrix *sub_a2_a4 = subtract_matrices(a2, a4);
-	Matrix *add_b3_b4 = add_matrices(b3, b4);
-	Matrix *m7 = strassen_multiply_pot_matrices(sub_a2_a4, add_b3_b4);
-	delete_matrix(add_b3_b4);
-	delete_matrix(sub_a2_a4);
-
-	Matrix *pre_c1_1 = add_matrices(m1, m4);
-	Matrix *pre_c1_2 = subtract_matrices(pre_c1_1, m5);
-	Matrix *c1 = add_matrices(pre_c1_2, m7);
-	delete_matrix(pre_c1_2);
-	delete_matrix(pre_c1_1);
-
-	Matrix *c2 = add_matrices(m3, m5);
-
-	Matrix *c3 = add_matrices(m2, m4);
-
-	Matrix *pre_c4_1 = subtract_matrices(m1, m2);
-	Matrix *pre_c4_2 = add_matrices(pre_c4_1, m3);
-	Matrix *c4 = add_matrices(pre_c4_2, m6);
-	delete_matrix(pre_c4_2);
-	delete_matrix(pre_c4_1);
-
-	Matrix *result = build_matrix_from_blocks(c1, c2, c3, c4);
-
-	delete_matrix(c1);
-	delete_matrix(c2);
-	delete_matrix(c3);
-	delete_matrix(c4);
-
-	delete_matrix(m7);
-	delete_matrix(m6);
-	delete_matrix(m5);
-	delete_matrix(m4);
-	delete_matrix(m3);
-	delete_matrix(m2);
-	delete_matrix(m1);
-
-	delete_matrix(a1);
-	delete_matrix(a2);
-	delete_matrix(a3);
-	delete_matrix(a4);
-
-	delete_matrix(b1);
-	delete_matrix(b2);
-	delete_matrix(b3);
-	delete_matrix(b4);
+	matrix_delete(b1);
+	matrix_delete(b2);
+	matrix_delete(b3);
+	matrix_delete(b4);
 
 	return result;
 }
@@ -215,28 +169,24 @@ Matrix *strassen_multiply_pot_matrices(Matrix *matrix_a, Matrix *matrix_b)
 // It then copies the values respectively into the auxilary matrix and resizes
 // the original matrix. At the end, it copies the values back into the original
 // matrix and deletes the auxilary matrix.
-void transpose_matrix(Matrix *matrix)
+void matrix_transpose(matrix_t *matrix)
 {
 	unsigned int new_size_n = matrix->size_m;
 	unsigned int new_size_m = matrix->size_n;
 
-	Matrix *aux_matrix = new_matrix(new_size_n, new_size_m);
+	matrix_t *aux_matrix = matrix_new(new_size_n, new_size_m);
 
-	for (unsigned int i = 0; i < new_size_n; i++) {
-		for (unsigned int j = 0; j < new_size_m; j++) {
+	for (unsigned int i = 0; i < new_size_n; i++)
+		for (unsigned int j = 0; j < new_size_m; j++)
 			aux_matrix->values[i][j] = matrix->values[j][i];
-		}
-	}
 
-	resize_matrix(new_size_n, new_size_m, matrix);
+	matrix_resize(new_size_n, new_size_m, matrix);
 
-	for (unsigned int i = 0; i < new_size_n; i++) {
-		for (unsigned int j = 0; j < new_size_m; j++) {
+	for (unsigned int i = 0; i < new_size_n; i++)
+		for (unsigned int j = 0; j < new_size_m; j++)
 			matrix->values[i][j] = aux_matrix->values[i][j];
-		}
-	}
 
-	delete_matrix(aux_matrix);
+	matrix_delete(aux_matrix);
 }
 
 // This function raises a matrix to a power in logarithmic time. It makes use of
@@ -248,18 +198,16 @@ void transpose_matrix(Matrix *matrix)
 // the original matrix.
 // The exit condition is reached when the power becomes equal to 0. Then, the
 // function returns the identity matrix.
-void recursive_power_raise_matrix(unsigned int power, Matrix *matrix,
-								  Matrix **result_matrix)
+void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
+								  matrix_t **result_matrix)
 {
 	if (power == 0) {
 		for (unsigned int i = 0; i < matrix->size_n; i++) {
 			for (unsigned int j = 0; j < matrix->size_m; j++) {
-				if (i == j) {
+				if (i == j)
 					(*result_matrix)->values[i][j] = 1;
-				}
-				else {
+				else
 					(*result_matrix)->values[i][j] = 0;
-				}
 			}
 		}
 
@@ -267,71 +215,37 @@ void recursive_power_raise_matrix(unsigned int power, Matrix *matrix,
 	}
 
 	if (power % 2) {
-		recursive_power_raise_matrix(power - 1, matrix, result_matrix);
-		Matrix *new_matrix = multiply_matrices(matrix, *result_matrix);
+		matrix_recursive_power_raise(power - 1, matrix, result_matrix);
+		matrix_t *matrix_new = matrix_multiply_matrices(matrix, *result_matrix);
 
-		delete_matrix(*result_matrix);
-		*result_matrix = new_matrix;
+		matrix_delete(*result_matrix);
+		*result_matrix = matrix_new;
 	}
 	else {
-		recursive_power_raise_matrix(power / 2, matrix, result_matrix);
-		Matrix *new_matrix = multiply_matrices(*result_matrix, *result_matrix);
+		matrix_recursive_power_raise(power / 2, matrix, result_matrix);
+		matrix_t *matrix_new = matrix_multiply_matrices(*result_matrix,
+														*result_matrix);
 
-		delete_matrix(*result_matrix);
-		*result_matrix = new_matrix;
+		matrix_delete(*result_matrix);
+		*result_matrix = matrix_new;
 	}
 }
 
 // This function offers an interface for rasising a given matrix to a given
 // power and storing it at the same address.
-void power_raise_matrix(unsigned int power, Matrix **matrix)
+void matrix_power_raise(unsigned int power, matrix_t **matrix)
 {
-	Matrix *result_matrix = new_matrix((*matrix)->size_n, (*matrix)->size_m);
-	recursive_power_raise_matrix(power, *matrix, &result_matrix);
+	matrix_t *result_matrix = matrix_new((*matrix)->size_n, (*matrix)->size_m);
+	matrix_recursive_power_raise(power, *matrix, &result_matrix);
 
-	delete_matrix(*matrix);
+	matrix_delete(*matrix);
 	*matrix = result_matrix;
 }
 
-// This function adds two given matrices and returns a new one as the result.
-Matrix *add_matrices(Matrix *a, Matrix *b)
-{
-	if (a->size_n != b->size_n || a->size_m != b->size_m) {
-		return NULL;
-	}
-
-	Matrix *matrix = new_matrix(a->size_n, a->size_m);
-	for (unsigned int i = 0; i < a->size_n; i++) {
-		for (unsigned int j = 0; j < a->size_m; j++) {
-			matrix->values[i][j] = modulo(a->values[i][j] + b->values[i][j]);
-		}
-	}
-
-	return matrix;
-}
-
-// This function substracts two given matrices and returns a new one as the
-// result.
-Matrix *subtract_matrices(Matrix *a, Matrix *b)
-{
-	if (a->size_n != b->size_n || a->size_m != b->size_m) {
-		return NULL;
-	}
-
-	Matrix *matrix = new_matrix(a->size_n, a->size_m);
-	for (unsigned int i = 0; i < a->size_n; i++) {
-		for (unsigned int j = 0; j < a->size_m; j++) {
-			matrix->values[i][j] = modulo(a->values[i][j] - b->values[i][j]);
-		}
-	}
-
-	return matrix;
-}
-
 // This functions swaps two matrices' pointers.
-void swap_matrices(Matrix **a, Matrix **b)
+void matrix_swap_matrices(matrix_t **a, matrix_t **b)
 {
-	Matrix *aux = *a;
+	matrix_t *aux = *a;
 	*a = *b;
 	*b = aux;
 }
@@ -341,8 +255,8 @@ void swap_matrices(Matrix **a, Matrix **b)
 //
 // This function firstly clears all the memory that would exceed the new bounds
 // and then in reallocates or allocates the new memory.
-void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
-				   Matrix *matrix)
+void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
+				   matrix_t *matrix)
 {
 	for (unsigned int i = 0; i < matrix->size_n; i++) {
 		free(matrix->values[i]);
@@ -352,35 +266,32 @@ void resize_matrix(unsigned int new_size_n, unsigned int new_size_m,
 	matrix->size_m = new_size_m;
 
 	matrix->values = realloc(matrix->values, new_size_n * sizeof(int *));
-	if (matrix->values == NULL) {
-		// err
-	}
+	if (!matrix->values)
+		exit(-1);
 
 	for (unsigned int i = 0; i < new_size_n; i++) {
 		matrix->values[i] = malloc(new_size_m * sizeof(int));
 		continue;
-		if (matrix->values[i] == NULL) {
-			if (matrix->values[i] == NULL) {
-				// err
-			}
-		}
-		else {
+		// TODO: fix this
+		if (!matrix->values[i])
+			exit(-1);
+		else
 			matrix->values[i] = realloc(matrix->values[i],
 										new_size_m * sizeof(int));
-		}
 	}
 }
 
-void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c,
-							Matrix **d)
+void matrix_break_in_blocks(matrix_t *matrix, matrix_t **a, matrix_t **b,
+							matrix_t **c,
+							matrix_t **d)
 {
 	unsigned int new_size_n = matrix->size_n / 2;
 	unsigned int new_size_m = matrix->size_m / 2;
 
-	*a = new_matrix(new_size_n, new_size_m);
-	*b = new_matrix(new_size_n, new_size_m);
-	*c = new_matrix(new_size_n, new_size_m);
-	*d = new_matrix(new_size_n, new_size_m);
+	*a = matrix_new(new_size_n, new_size_m);
+	*b = matrix_new(new_size_n, new_size_m);
+	*c = matrix_new(new_size_n, new_size_m);
+	*d = matrix_new(new_size_n, new_size_m);
 
 	for (unsigned int i = 0; i < new_size_n; i++) {
 		for (unsigned int j = 0; j < new_size_m; j++) {
@@ -392,12 +303,13 @@ void break_matrix_in_blocks(Matrix *matrix, Matrix **a, Matrix **b, Matrix **c,
 	}
 }
 
-Matrix *build_matrix_from_blocks(Matrix *a, Matrix *b, Matrix *c, Matrix *d)
+matrix_t *matrix_build_from_blocks(matrix_t *a, matrix_t *b, matrix_t *c,
+								   matrix_t *d)
 {
 	unsigned int new_size_n = a->size_n + c->size_n;
 	unsigned int new_size_m = a->size_m + b->size_m;
 
-	Matrix *matrix = new_matrix(new_size_n, new_size_m);
+	matrix_t *matrix = matrix_new(new_size_n, new_size_m);
 
 	for (unsigned int i = 0; i < a->size_n; i++) {
 		for (unsigned int j = 0; j < a->size_m; j++) {
@@ -411,42 +323,29 @@ Matrix *build_matrix_from_blocks(Matrix *a, Matrix *b, Matrix *c, Matrix *d)
 	return matrix;
 }
 
-int compute_elements_sum(const Matrix *matrix)
+int matrix_compute_elements_sum(const matrix_t *matrix)
 {
 	int sum = 0;
 
-	for (unsigned int i = 0; i < matrix->size_n; i++) {
-		for (unsigned int j = 0; j < matrix->size_m; j++) {
+	for (unsigned int i = 0; i < matrix->size_n; i++)
+		for (unsigned int j = 0; j < matrix->size_m; j++)
 			sum = modulo(sum + matrix->values[i][j]);
-		}
-	}
 
 	return sum;
 }
 
-int cmp_matrices_ascending(const Matrix *a, const Matrix *b)
+int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = compute_elements_sum(a);
-	int sum_b = compute_elements_sum(b);
+	int sum_a = matrix_compute_elements_sum(a);
+	int sum_b = matrix_compute_elements_sum(b);
 
 	return sum_a - sum_b;
 }
 
-int cmp_matrices_descending(const Matrix *a, const Matrix *b)
+int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = compute_elements_sum(a);
-	int sum_b = compute_elements_sum(b);
+	int sum_a = matrix_compute_elements_sum(a);
+	int sum_b = matrix_compute_elements_sum(b);
 
 	return sum_b - sum_a;
-}
-
-int modulo(int value)
-{
-	value %= MODULO;
-
-	if (value < 0) {
-		return value + MODULO;
-	}
-
-	return value;
 }

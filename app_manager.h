@@ -9,81 +9,81 @@
 #include "io_utils.h"
 
 /**
- * @brief Interface for reading a matrix from STDIN to a MatrixArray.
+ * @brief Interface for reading a matrix from STDIN to a matrix_array_t.
  *
  * @param matrix_array
  */
-void read_matrix_task(MatrixArray *matrix_array);
+void task_read_matrix(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for printing a matrix from a MatrixArray to STDOUT.
+ * @brief Interface for printing a matrix from a matrix_array_t to STDOUT.
  *
  * @param matrix_array
  */
-void print_matrix_task(MatrixArray *matrix_array);
+void task_print_matrix(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for printing the dimensions of a matrix from a MatrixArray.
+ * @brief Interface for printing the dimensions of a matrix from a matrix_array_t.
  *
  * @param matrix_array
  */
-void print_matrix_dimensions_task(MatrixArray *matrix_array);
+void task_print_matrix_dimensions(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for resizing a matrix from a MatrixArray.
+ * @brief Interface for resizing a matrix from a matrix_array_t.
  *
  * @param matrix_array
  */
-void resize_matrix_task(MatrixArray *matrix_array);
+void task_resize_matrix(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for multiplying matrices from a MatrixArray.
+ * @brief Interface for multiplying matrices from a matrix_array_t.
  *
  * @param matrix_array
  */
-void multiply_matrices_task(MatrixArray *matrix_array);
+void task_multiply_matrices(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for multiplying matrices from a MatrixArray using Strassen
+ * @brief Interface for multiplying matrices from a matrix_array_t using Strassen
  *        algorithm.
  *
  * @param matrix_array
  */
-void strassen_multiply_matrices_task(MatrixArray *matrix_array);
+void task_strassen_multiply_matrices(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for sorting a MatrixArray.
+ * @brief Interface for sorting a matrix_array_t.
  *
  * @param matrix_array
  */
-void sort_matrix_array_task(MatrixArray *matrix_array);
+void task_sort_matrix_array(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for transposing a matrix from a MatrixArray.
+ * @brief Interface for transposing a matrix from a matrix_array_t.
  *
  * @param matrix_array
  */
-void transpose_matrix_task(MatrixArray *matrix_array);
+void task_transpose_matrix(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for raising a matrix from a MatrixArray to a power.
+ * @brief Interface for raising a matrix from a matrix_array_t to a power.
  *
  * @param matrix_array
  */
-void pow_raise_matrix_task(MatrixArray *matrix_array);
+void task_pow_raise_matrix(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for removing and DELETING a matrix from a MatrixArray.
+ * @brief Interface for removing and DELETING a matrix from a matrix_array_t.
  *
  * @param matrix_array
  */
-void remove_matrix_task(MatrixArray *matrix_array);
+void task_remove_matrix(matrix_array_t *matrix_array);
 
 /**
  * @brief Interface for quitting the program.
  *
  * @param matrix_array
  */
-void quit(MatrixArray *matrix_array);
+void task_quit(matrix_array_t *matrix_array);
 
 #endif

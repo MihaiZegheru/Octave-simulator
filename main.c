@@ -9,63 +9,62 @@
 int main(void)
 {
 	setbuf(stdout, NULL);
-	MatrixArray *matrix_array = new_matrix_array(0);
+	matrix_array_t *matrix_array = matrix_array_new(0);
 
 	while (1) {
 		char cmd;
 		scanf("%c", &cmd);
 
-		if (cmd == ' ' || cmd == '\n') {
+		if (cmd == ' ' || cmd == '\n')
 			continue;
-		}
 
 		if (cmd == 'L') {
-			read_matrix_task(matrix_array);
+			task_read_matrix(matrix_array);
 			continue;
 		}
 		if (cmd == 'P') {
-			print_matrix_task(matrix_array);
+			task_print_matrix(matrix_array);
 			continue;
 		}
 		if (cmd == 'D') {
-			print_matrix_dimensions_task(matrix_array);
+			task_print_matrix_dimensions(matrix_array);
 			continue;
 		}
 		if (cmd == 'C') {
-			resize_matrix_task(matrix_array);
+			task_resize_matrix(matrix_array);
 			continue;
 		}
 		if (cmd == 'M') {
-			multiply_matrices_task(matrix_array);
+			task_multiply_matrices(matrix_array);
 			continue;
 		}
 		if (cmd == 'S') {
-			strassen_multiply_matrices_task(matrix_array);
+			task_strassen_multiply_matrices(matrix_array);
 			continue;
 		}
 		if (cmd == 'O') {
-			sort_matrix_array_task(matrix_array);
+			task_sort_matrix_array(matrix_array);
 			continue;
 		}
 		if (cmd == 'T') {
-			transpose_matrix_task(matrix_array);
+			task_transpose_matrix(matrix_array);
 			continue;
 		}
 		if (cmd == 'R') {
-			pow_raise_matrix_task(matrix_array);
+			task_pow_raise_matrix(matrix_array);
 			continue;
 		}
 		if (cmd == 'F') {
-			remove_matrix_task(matrix_array);
+			task_remove_matrix(matrix_array);
 			continue;
 		}
 		if (cmd == 'Q') {
-			quit(matrix_array);
+			task_quit(matrix_array);
 			continue;
 		}
 
 		printf("Unrecognized command\n");
 	}
 
-	delete_matrix_array(matrix_array);
+	matrix_array_delete(matrix_array);
 }
