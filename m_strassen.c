@@ -1,3 +1,6 @@
+#ifndef M_STRASSEN_C__
+#define M_STRASSEN_C__
+
 #include "matrix.h"
 
 #include "m_math.c"
@@ -111,3 +114,5 @@ matrix_t *matrix_strassen_compute_c4(matrix_t *m1, matrix_t *m2, matrix_t *m3,
 
     return c4;
 }
+
+#endif

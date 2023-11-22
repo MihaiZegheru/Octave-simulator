@@ -1,7 +1,6 @@
 #include "matrix.h"
 
 #include "m_strassen.c"
-#include "m_math.c"
 
 matrix_t *matrix_new(unsigned int size_n, unsigned int size_m)
 {
@@ -255,7 +254,7 @@ void matrix_swap_matrices(matrix_t **a, matrix_t **b)
 //
 // This function firstly clears all the memory that would exceed the new bounds
 // and then in reallocates or allocates the new memory.
-void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
+void matrix_resize(unsigned int new_size_n, unsigned int new_size_m,
 				   matrix_t *matrix)
 {
 	for (unsigned int i = 0; i < matrix->size_n; i++) {

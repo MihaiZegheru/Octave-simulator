@@ -1,4 +1,7 @@
-#include "matrix_array.h"
+#ifndef M_MATH_C__
+#define M_MATH_C__
+
+#include "matrix.h"
 
 // This function adds two given matrices and returns a new one as the result.
 matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b)
@@ -28,3 +31,5 @@ matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b)
 
 	return matrix;
 }
+
+#endif
