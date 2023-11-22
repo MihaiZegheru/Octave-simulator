@@ -87,24 +87,6 @@ void matrix_transpose(matrix_t *matrix);
 void matrix_power_raise(unsigned int power, matrix_t **matrix);
 
 /**
- * @brief Adds two Matrices and returns the result as a new matrix_t.
- *
- * @param a
- * @param b
- * @return matrix_t*
- */
-matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b);
-
-/**
- * @brief Subtracts two Matrices and returns the result as a new matrix_t.
- *
- * @param a
- * @param b
- * @return matrix_t*
- */
-matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b);
-
-/**
  * @brief Swaps two Matrices.
  *
  * @param a
