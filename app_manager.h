@@ -23,7 +23,8 @@ void task_read_matrix(matrix_array_t *matrix_array);
 void task_print_matrix(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for printing the dimensions of a matrix from a matrix_array_t.
+ * @brief Interface for printing the dimensions of a matrix from a
+ *        matrix_array_t.
  *
  * @param matrix_array
  */
@@ -44,8 +45,8 @@ void task_resize_matrix(matrix_array_t *matrix_array);
 void task_multiply_matrices(matrix_array_t *matrix_array);
 
 /**
- * @brief Interface for multiplying matrices from a matrix_array_t using Strassen
- *        algorithm.
+ * @brief Interface for multiplying matrices from a matrix_array_t using
+ *        Strassen algorithm.
  *
  * @param matrix_array
  */

@@ -41,8 +41,9 @@ void matrix_delete(matrix_t *matrix)
 // the new values and the contants of the auxilary matrix are moved into the
 // original one. In the end, the auxilary matrix gets deleted.
 void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
-			unsigned int *row_indexes, unsigned int *col_indexes,
-			matrix_t *matrix)
+							 unsigned int *row_indexes,
+							 unsigned int *col_indexes,
+							 matrix_t *matrix)
 {
 	matrix_t *aux_matrix = matrix_new(new_size_n, new_size_m);
 	for (unsigned int i = 0; i < new_size_n; i++) {
@@ -123,7 +124,7 @@ matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a,
 	matrix_t *m1 = matrix_strassen_compute_m1(a1, a4, b1, b4);
 	matrix_t *m2 = matrix_strassen_compute_m2(a3, a4, b1);
 	matrix_t *m3 = matrix_strassen_compute_m3(a1, b2, b4);
-	matrix_t *m4 = matrix_strassen_compute_m4(a4, b1, b3);	
+	matrix_t *m4 = matrix_strassen_compute_m4(a4, b1, b3);
 	matrix_t *m5 = matrix_strassen_compute_m5(a1, a2, b4);
 	matrix_t *m6 = matrix_strassen_compute_m6(a1, a3, b1, b2);
 	matrix_t *m7 = matrix_strassen_compute_m7(a2, a4, b3, b4);
@@ -219,8 +220,7 @@ void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
 
 		matrix_delete(*result_matrix);
 		*result_matrix = matrix_new;
-	}
-	else {
+	} else {
 		matrix_recursive_power_raise(power / 2, matrix, result_matrix);
 		matrix_t *matrix_new = matrix_multiply_matrices(*result_matrix,
 														*result_matrix);
@@ -257,9 +257,8 @@ void matrix_swap_matrices(matrix_t **a, matrix_t **b)
 void matrix_resize(unsigned int new_size_n, unsigned int new_size_m,
 				   matrix_t *matrix)
 {
-	for (unsigned int i = 0; i < matrix->size_n; i++) {
+	for (unsigned int i = 0; i < matrix->size_n; i++)
 		free(matrix->values[i]);
-	}
 
 	matrix->size_n = new_size_n;
 	matrix->size_m = new_size_m;

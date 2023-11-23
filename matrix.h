@@ -48,8 +48,9 @@ void matrix_delete(matrix_t *matrix);
  * @param matrix
  */
 void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
-			unsigned int *row_indexes, unsigned int *col_indexes,
-			matrix_t *matrix);
+							 unsigned int *row_indexes,
+							 unsigned int *col_indexes,
+							 matrix_t *matrix);
 
 /**
  * @brief Multiplies two given Matrices and returns the new one.
@@ -68,7 +69,8 @@ matrix_t *matrix_multiply_matrices(matrix_t *matrix_a, matrix_t *matrix_b);
  * @param matrix_b
  * @return matrix_t*
  */
-matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a, matrix_t *matrix_b);
+matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a,
+												matrix_t *matrix_b);
 
 /**
  * @brief Transposes the given matrix_t and saves it at the same address.
@@ -78,8 +80,8 @@ matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a, matrix_t *ma
 void matrix_transpose(matrix_t *matrix);
 
 /**
- * @brief Interface for raising the given matrix_t to a power in logarithmic time
- *        and saves it at the same address.
+ * @brief Interface for raising the given matrix_t to a power in logarithmic
+ *		  time and saves it at the same address.
  *
  * @param power
  * @param matrix
@@ -115,8 +117,8 @@ void matrix_resize(unsigned int new_size_n, unsigned int new_size_m,
  * @param c returned block matrix address
  * @param d returned block matrix address
  */
-void matrix_break_in_blocks(matrix_t *matrix, matrix_t **a, matrix_t **b, matrix_t **c,
-							matrix_t **d);
+void matrix_break_in_blocks(matrix_t *matrix, matrix_t **a, matrix_t **b,
+							matrix_t **c, matrix_t **d);
 
 /**
  * @brief Builds a matrix_t from 4 smaller blocks. Returns a new matrix_t.
@@ -128,11 +130,12 @@ void matrix_break_in_blocks(matrix_t *matrix, matrix_t **a, matrix_t **b, matrix
  * @param d
  * @return matrix_t*
  */
-matrix_t *matrix_build_from_blocks(matrix_t *a, matrix_t *b, matrix_t *c, matrix_t *d);
+matrix_t *matrix_build_from_blocks(matrix_t *a, matrix_t *b, matrix_t *c,
+								   matrix_t *d);
 
 /**
- * @brief The implementation of logarithmic power raising. Returns result matrix_t
- *		  as parameter.
+ * @brief The implementation of logarithmic power raising. Returns result
+ *		  matrix_t as parameter.
  *
  * @param power
  * @param matrix

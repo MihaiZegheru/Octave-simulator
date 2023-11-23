@@ -1,6 +1,6 @@
 #include "io_utils.h"
 
-matrix_t *io_read_matrix()
+matrix_t *io_read_matrix(void)
 {
 	// Does not check for mistakes in input
 
@@ -18,7 +18,9 @@ matrix_t *io_read_matrix()
 
 void io_print_matrix(matrix_t *matrix)
 {
-	for (unsigned int i = 0; i < matrix->size_n; i++)
+	for (unsigned int i = 0; i < matrix->size_n; i++) {
 		for (unsigned int j = 0; j < matrix->size_m; j++)
 			printf("%d ", matrix->values[i][j]);
+		printf("\n");
+	}
 }

@@ -59,6 +59,7 @@ dkms.conf
 check_utils
 cs
 tasks
+.check.grade
 .checkpatch-camelcase.git.
 check
 *.sh

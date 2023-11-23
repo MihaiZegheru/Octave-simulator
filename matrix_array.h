@@ -65,8 +65,8 @@ void matrix_array_remove_matrix(unsigned int index,
  * @param matrix_array
  * @return matrix_t*
  */
-matrix_t *matrix_array_get_matrix_pointer_by_value(unsigned int index,
-												 matrix_array_t *matrix_array);
+matrix_t *matrix_array_get_matrix_pointer_by_value
+		(unsigned int index, matrix_array_t *matrix_array);
 
 /**
  * @brief Get the matrix_t pointer from the array by value at the given index.
@@ -75,12 +75,12 @@ matrix_t *matrix_array_get_matrix_pointer_by_value(unsigned int index,
  * @param matrix_array
  * @return matrix_t**
  */
-matrix_t **matrix_array_get_matrix_pointer_by_reference(unsigned int index,
-										 			  matrix_array_t *matrix_array);
+matrix_t **matrix_array_get_matrix_pointer_by_reference
+		(unsigned int index, matrix_array_t *matrix_array);
 
 /**
- * @brief Partitions the elements in the array in the given range for the
- *        quick sort algorithm based on the given pivot.
+ * @brief Partitions the elements in the array in the given range for the quick
+ *        sort algorithm based on the given pivot.
  *
  * @param pivot
  * @param first
@@ -89,10 +89,10 @@ matrix_t **matrix_array_get_matrix_pointer_by_reference(unsigned int index,
  * @return matrix_t**
  */
 matrix_t **matrix_array_quick_sort_partition(matrix_t **pivot,
-										   matrix_t **first,
-										   matrix_t **last,
-										   int (*cmp)(const matrix_t *,
-										   			  const matrix_t *));
+											 matrix_t **first,
+											 matrix_t **last,
+											 int (*cmp)(const matrix_t *,
+														const matrix_t *));
 
 /**
  * @brief Quick sorts the Matrices in the array in the given range

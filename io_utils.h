@@ -11,7 +11,7 @@
  *
  * @return matrix_t*
  */
-matrix_t *io_read_matrix();
+matrix_t *io_read_matrix(void);
 
 /**
  * @brief Prints a matrix_t at the given address.
