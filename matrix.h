@@ -38,41 +38,6 @@ matrix_t *matrix_new(unsigned int size_n, unsigned int size_m);
 void matrix_delete(matrix_t *matrix);
 
 /**
- * @brief Interface for setting a matrix_t element value.
- * 
- * @param index_i 
- * @param index_j 
- * @param matrix 
- */
-void matrix_set_element(int value, unsigned int index_i, unsigned int index_j,
-						matrix_t *matrix);
-
-/**
- * @brief Copies a value from a matrix to another one by specified indexes.
- * 
- * @param index_source_i 
- * @param index_source_j 
- * @param matrix_source 
- * @param index_target_i 
- * @param index_target_j 
- * @param matrix_target 
- */
-void matrix_copy_element(unsigned int index_source_i,
-						 unsigned int index_source_j, matrix_t *matrix_source,
-						 unsigned int index_target_i,
-						 unsigned int index_target_j, matrix_t *matrix_target);
-
-/**
- * @brief Interface for getting a matrix_t element value.
- * 
- * @param index_i 
- * @param index_j 
- * @param matrix 
- */
-int matrix_get_element(unsigned int index_i, unsigned int index_j,
-						matrix_t *matrix);
-
-/**
  * @brief Resizes the given matrix_t including the intersection of the specified
  *        rows and columns.
  *
@@ -186,7 +151,7 @@ void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
  * @param *matrix:
  * @return int
  */
-int matrix_compute_sum(matrix_t *matrix);
+int matrix_compute_elements_sum(const matrix_t *matrix);
 
 /**
  * @brief Calculates the difference between matrix_t a and matrix_t b;
@@ -208,42 +173,5 @@ int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b);
  * @return int
  */
 int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b);
-
-/**
- * @brief This function adds two given matrices and returns a new one as the
- * 		  result.
- * 
- * @param a 
- * @param b 
- * @return matrix_t* 
- */
-matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b);
-
-/**
- * @brief This function substracts two given matrices and returns a new one as
- * 		  the result.
- * 
- * @param a 
- * @param b 
- * @return matrix_t* 
- */
-matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b)
-
-matrix_t *matrix_strassen_compute_m1(matrix_t *a1, matrix_t *a4, matrix_t *b1,
-									 matrix_t *b4);
-matrix_t *matrix_strassen_compute_m2(matrix_t *a3, matrix_t *a4, matrix_t *b1);
-matrix_t *matrix_strassen_compute_m3(matrix_t *a1, matrix_t *b2, matrix_t *b4);
-matrix_t *matrix_strassen_compute_m4(matrix_t *a4, matrix_t *b1, matrix_t *b3);
-matrix_t *matrix_strassen_compute_m5(matrix_t *a1, matrix_t *a2, matrix_t *b4);
-matrix_t *matrix_strassen_compute_m6(matrix_t *a1, matrix_t *a3, matrix_t *b1,
-									 matrix_t *b2);
-matrix_t *matrix_strassen_compute_m7(matrix_t *a2, matrix_t *a4, matrix_t *b3,
-									 matrix_t *b4);
-matrix_t *matrix_strassen_compute_c1(matrix_t *m1, matrix_t *m4, matrix_t *m5,
-									 matrix_t *m7);
-matrix_t *matrix_strassen_compute_c2(matrix_t *m3, matrix_t *m5);
-matrix_t *matrix_strassen_compute_c3(matrix_t *m2, matrix_t *m4);
-matrix_t *matrix_strassen_compute_c4(matrix_t *m1, matrix_t *m2, matrix_t *m3,
-									 matrix_t *m6);
 
 #endif
