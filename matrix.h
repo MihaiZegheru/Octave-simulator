@@ -16,6 +16,10 @@ typedef struct {
 	 */
 	unsigned int size_m;
 	/**
+	 * @brief  The sum of the elements
+	 */
+	int sum;
+	/**
 	 * @brief The values in the matrix
 	 */
 	int **values;
@@ -36,6 +40,41 @@ matrix_t *matrix_new(unsigned int size_n, unsigned int size_m);
  * @param matrix
  */
 void matrix_delete(matrix_t *matrix);
+
+/**
+ * @brief Interface for setting a matrix_t element value.
+ * 
+ * @param index_i 
+ * @param index_j 
+ * @param matrix 
+ */
+void matrix_set_element(int value, unsigned int index_i, unsigned int index_j,
+						matrix_t *matrix);
+						
+/**
+ * @brief Copies a value from a matrix to another one by specified indexes.
+ * 
+ * @param index_source_i 
+ * @param index_source_j 
+ * @param matrix_source 
+ * @param index_target_i 
+ * @param index_target_j 
+ * @param matrix_target 
+ */
+void matrix_copy_element(unsigned int index_source_i,
+						 unsigned int index_source_j, matrix_t *matrix_source,
+						 unsigned int index_target_i,
+						 unsigned int index_target_j, matrix_t *matrix_target);
+
+/**
+ * @brief Interface for getting a matrix_t element value.
+ * 
+ * @param index_i 
+ * @param index_j 
+ * @param matrix 
+ */
+int matrix_get_element(unsigned int index_i, unsigned int index_j,
+						matrix_t *matrix);
 
 /**
  * @brief Resizes the given matrix_t including the intersection of the specified
@@ -151,7 +190,7 @@ void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
  * @param *matrix:
  * @return int
  */
-int matrix_compute_elements_sum(const matrix_t *matrix);
+int matrix_compute_sum(matrix_t *matrix);
 
 /**
  * @brief Calculates the difference between matrix_t a and matrix_t b;

@@ -1,12 +1,11 @@
 #include "matrix.h"
 
-#include "m_strassen.c"
-
 matrix_t *matrix_new(unsigned int size_n, unsigned int size_m)
 {
 	matrix_t *matrix = malloc(sizeof(matrix_t));
 	matrix->size_n = size_n;
 	matrix->size_m = size_m;
+	matrix->sum = 0;
 
 	matrix->values = malloc(size_n * sizeof(int *));
 	if (!matrix->values)
@@ -30,6 +29,37 @@ void matrix_delete(matrix_t *matrix)
 	free(matrix);
 }
 
+void matrix_set_element(int value, unsigned int index_i, unsigned int index_j,
+						matrix_t *matrix)
+{	
+	matrix->sum = modulo(matrix->sum - matrix->values[index_i][index_j]);
+	matrix->values[index_i][index_j] = value;
+	matrix->sum = modulo(matrix->sum + value);
+}
+
+void matrix_copy_element(unsigned int index_source_i,
+						 unsigned int index_source_j, matrix_t *matrix_source,
+						 unsigned int index_target_i,
+						 unsigned int index_target_j, matrix_t *matrix_target)
+{
+	matrix_target->sum =
+			modulo(matrix_target->sum -
+				   matrix_target->values[index_target_i][index_target_j]);
+
+	matrix_target->values[index_target_i][index_target_j] = 
+			matrix_source->values[index_source_i][index_source_j];
+
+	matrix_target->sum =
+			modulo(matrix_target->sum +
+				   matrix_target->values[index_target_i][index_target_j]);
+}
+
+int matrix_get_element(unsigned int index_i, unsigned int index_j,
+						matrix_t *matrix)
+{
+	return matrix->values[index_i][index_j];
+}
+
 // This function offers an interface for resizing a given matrix to the given
 // sizes by selecting what values to include in the result and saving it at the
 // same address.
@@ -51,7 +81,7 @@ void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
 			unsigned int index_i = row_indexes[i];
 			unsigned int index_j = col_indexes[j];
 
-			aux_matrix->values[i][j] = matrix->values[index_i][index_j];
+			matrix_copy_element(index_i, index_j, matrix, i, j, aux_matrix);
 		}
 	}
 
@@ -59,7 +89,7 @@ void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
 
 	for (unsigned int i = 0; i < new_size_n; i++)
 		for (unsigned int j = 0; j < new_size_m; j++)
-			matrix->values[i][j] = aux_matrix->values[i][j];
+			matrix_copy_element(i, j, aux_matrix, i, j, matrix);
 
 	matrix_delete(aux_matrix);
 }
@@ -84,10 +114,10 @@ matrix_t *matrix_multiply_matrices(matrix_t *matrix_a, matrix_t *matrix_b)
 		for (unsigned int j = 0; j < new_size_m; j++) {
 			int sum = 0;
 			for (unsigned int k = 0; k < common_size; k++)
-				sum = modulo(sum + matrix_a->values[i][k] *
-							 matrix_b->values[k][j]);
+				sum = modulo(sum + matrix_get_element(i, k, matrix_a) *
+							 matrix_get_element(k, j, matrix_b));
 
-			result->values[i][j] = sum;
+			matrix_set_element(sum, i, j, result);
 		}
 	}
 
@@ -178,13 +208,13 @@ void matrix_transpose(matrix_t *matrix)
 
 	for (unsigned int i = 0; i < new_size_n; i++)
 		for (unsigned int j = 0; j < new_size_m; j++)
-			aux_matrix->values[i][j] = matrix->values[j][i];
+			matrix_copy_element(j, i, matrix, i, j, aux_matrix);
 
 	matrix_resize(new_size_n, new_size_m, matrix);
 
 	for (unsigned int i = 0; i < new_size_n; i++)
 		for (unsigned int j = 0; j < new_size_m; j++)
-			matrix->values[i][j] = aux_matrix->values[i][j];
+			matrix_copy_element(i, j, aux_matrix, i, j, matrix);
 
 	matrix_delete(aux_matrix);
 }
@@ -205,9 +235,9 @@ void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
 		for (unsigned int i = 0; i < matrix->size_n; i++) {
 			for (unsigned int j = 0; j < matrix->size_m; j++) {
 				if (i == j)
-					(*result_matrix)->values[i][j] = 1;
+					matrix_set_element(1, i, j, *result_matrix);
 				else
-					(*result_matrix)->values[i][j] = 0;
+					matrix_set_element(0, i, j, *result_matrix);
 			}
 		}
 
@@ -293,10 +323,11 @@ void matrix_break_in_blocks(matrix_t *matrix, matrix_t **a, matrix_t **b,
 
 	for (unsigned int i = 0; i < new_size_n; i++) {
 		for (unsigned int j = 0; j < new_size_m; j++) {
-			(*a)->values[i][j] = matrix->values[i][j];
-			(*b)->values[i][j] = matrix->values[i][new_size_m + j];
-			(*c)->values[i][j] = matrix->values[new_size_n + i][j];
-			(*d)->values[i][j] = matrix->values[new_size_n + i][new_size_m + j];
+			matrix_copy_element(i, j, *a, i, j, matrix);
+			matrix_copy_element(i, j, *b, i, new_size_m, matrix);
+			matrix_copy_element(i, j, *c, new_size_n + i, j, matrix);
+			matrix_copy_element(i, j, *d, new_size_n + i, new_size_m + j,
+								matrix);
 		}
 	}
 }
@@ -311,17 +342,17 @@ matrix_t *matrix_build_from_blocks(matrix_t *a, matrix_t *b, matrix_t *c,
 
 	for (unsigned int i = 0; i < a->size_n; i++) {
 		for (unsigned int j = 0; j < a->size_m; j++) {
-			matrix->values[i][j] = a->values[i][j];
-			matrix->values[i][a->size_m + j] = b->values[i][j];
-			matrix->values[a->size_n + i][j] = c->values[i][j];
-			matrix->values[a->size_n + i][a->size_m + j] = d->values[i][j];
+			matrix_copy_element(i, j, matrix, i, j, a);
+			matrix_copy_element(i, a->size_m + j, matrix, i, j, b);
+			matrix_copy_element(a->size_n + i, j, matrix, i, j, c);
+			matrix_copy_element(a->size_n + i, a->size_m + j, matrix, i, j, d);
 		}
 	}
 
 	return matrix;
 }
 
-int matrix_compute_elements_sum(const matrix_t *matrix)
+int matrix_compute_sum(matrix_t *matrix)
 {
 	int sum = 0;
 
@@ -329,21 +360,23 @@ int matrix_compute_elements_sum(const matrix_t *matrix)
 		for (unsigned int j = 0; j < matrix->size_m; j++)
 			sum = modulo(sum + matrix->values[i][j]);
 
+	matrix->sum = sum;
+
 	return sum;
 }
 
 int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = matrix_compute_elements_sum(a);
-	int sum_b = matrix_compute_elements_sum(b);
+	int sum_a = matrix_compute_sum(a);
+	int sum_b = matrix_compute_sum(b);
 
 	return sum_a - sum_b;
 }
 
 int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = matrix_compute_elements_sum(a);
-	int sum_b = matrix_compute_elements_sum(b);
+	int sum_a = matrix_compute_sum(a);
+	int sum_b = matrix_compute_sum(b);
 
 	return sum_b - sum_a;
 }
