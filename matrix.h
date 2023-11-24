@@ -16,10 +16,6 @@ typedef struct {
 	 */
 	unsigned int size_m;
 	/**
-	 * @brief  The sum of the elements
-	 */
-	int sum;
-	/**
 	 * @brief The values in the matrix
 	 */
 	int **values;
@@ -229,25 +225,5 @@ matrix_t *matrix_strassen_compute_c2(matrix_t *m3, matrix_t *m5);
 matrix_t *matrix_strassen_compute_c3(matrix_t *m2, matrix_t *m4);
 matrix_t *matrix_strassen_compute_c4(matrix_t *m1, matrix_t *m2, matrix_t *m3,
 									 matrix_t *m6);
-									 
-/**
- * @brief This function adds two given matrices and returns a new one as the
- * 		  result.
- * 
- * @param a 
- * @param b 
- * @return matrix_t* 
- */
-matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b);
-
-/**
- * @brief This function substracts two given matrices and returns a new one as
- * 		  the result.
- * 
- * @param a 
- * @param b 
- * @return matrix_t* 
- */
-matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b);
 
 #endif
