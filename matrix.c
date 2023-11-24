@@ -32,6 +32,13 @@ void matrix_delete(matrix_t *matrix)
 void matrix_set_element(int value, unsigned int index_i, unsigned int index_j,
 						matrix_t *matrix)
 {	
+	matrix->values[index_i][index_j] = value;
+	matrix->sum = modulo(matrix->sum + value);
+}
+
+void matrix_update_element(int value, unsigned int index_i, unsigned int index_j,
+						matrix_t *matrix)
+{	
 	matrix->sum = modulo(matrix->sum - matrix->values[index_i][index_j]);
 	matrix->values[index_i][index_j] = value;
 	matrix->sum = modulo(matrix->sum + value);
@@ -46,7 +53,7 @@ void matrix_copy_element(unsigned int index_source_i,
 			modulo(matrix_target->sum -
 				   matrix_target->values[index_target_i][index_target_j]);
 
-	matrix_target->values[index_target_i][index_target_j] = 
+	matrix_target->values[index_target_i][index_target_j] =
 			matrix_source->values[index_source_i][index_source_j];
 
 	matrix_target->sum =
@@ -367,16 +374,10 @@ int matrix_compute_sum(matrix_t *matrix)
 
 int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = matrix_compute_sum(a);
-	int sum_b = matrix_compute_sum(b);
-
-	return sum_a - sum_b;
+	return a->sum - b->sum;
 }
 
 int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = matrix_compute_sum(a);
-	int sum_b = matrix_compute_sum(b);
-
-	return sum_b - sum_a;
+	return b->sum - a->sum;
 }
