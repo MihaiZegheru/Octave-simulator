@@ -1,7 +1,5 @@
 #include "matrix.h"
 
-#include "m_strassen.c"
-
 matrix_t *matrix_new(unsigned int size_n, unsigned int size_m)
 {
 	matrix_t *matrix = malloc(sizeof(matrix_t));

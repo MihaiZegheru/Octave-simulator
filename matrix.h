@@ -174,4 +174,42 @@ int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b);
  */
 int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b);
 
+/**
+ * @brief This function adds two given matrices and returns a new one as the
+ * 		  result.
+ * 
+ * @param a 
+ * @param b 
+ * @return matrix_t* 
+ */
+matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b);
+
+/**
+ * @brief This function substracts two given matrices and returns a new one as
+ * 		  the result.
+ * 
+ * @param a 
+ * @param b 
+ * @return matrix_t* 
+ */
+matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b);
+
+matrix_t *matrix_strassen_compute_m1(matrix_t *a1, matrix_t *a4, matrix_t *b1,
+									 matrix_t *b4);
+matrix_t *matrix_strassen_compute_m2(matrix_t *a3, matrix_t *a4, matrix_t *b1);
+matrix_t *matrix_strassen_compute_m3(matrix_t *a1, matrix_t *b2, matrix_t *b4);
+matrix_t *matrix_strassen_compute_m4(matrix_t *a4, matrix_t *b1, matrix_t *b3);
+matrix_t *matrix_strassen_compute_m5(matrix_t *a1, matrix_t *a2, matrix_t *b4);
+matrix_t *matrix_strassen_compute_m6(matrix_t *a1, matrix_t *a3, matrix_t *b1,
+									 matrix_t *b2);
+matrix_t *matrix_strassen_compute_m7(matrix_t *a2, matrix_t *a4, matrix_t *b3,
+									 matrix_t *b4);
+matrix_t *matrix_strassen_compute_c1(matrix_t *m1, matrix_t *m4, matrix_t *m5,
+									 matrix_t *m7);
+matrix_t *matrix_strassen_compute_c2(matrix_t *m3, matrix_t *m5);
+matrix_t *matrix_strassen_compute_c3(matrix_t *m2, matrix_t *m4);
+matrix_t *matrix_strassen_compute_c4(matrix_t *m1, matrix_t *m2, matrix_t *m3,
+									 matrix_t *m6);
+
+
 #endif
