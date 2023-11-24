@@ -352,7 +352,7 @@ int matrix_compute_sum(matrix_t *matrix)
 	return sum;
 }
 
-int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b)
+int matrix_cmp_matrices_ascending(matrix_t *a, matrix_t *b)
 {
 	int sum_a = matrix_compute_sum(a);
 	int sum_b = matrix_compute_sum(b);
@@ -360,7 +360,7 @@ int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b)
 	return a - b;
 }
 
-int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b)
+int matrix_cmp_matrices_descending(matrix_t *a, matrix_t *b)
 {
 	int sum_a = matrix_compute_sum(a);
 	int sum_b = matrix_compute_sum(b);
