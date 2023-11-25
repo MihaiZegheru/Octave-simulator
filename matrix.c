@@ -58,7 +58,8 @@ void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
 	for (unsigned int i = 0; i < new_size_n; i++)
 		for (unsigned int j = 0; j < new_size_m; j++)
 			matrix->values[i][j] = aux_matrix->values[i][j];
-
+	matrix_update_elements_sum(matrix);
+	
 	matrix_delete(aux_matrix);
 }
 
@@ -88,6 +89,8 @@ matrix_t *matrix_multiply_matrices(matrix_t *matrix_a, matrix_t *matrix_b)
 			result->values[i][j] = sum;
 		}
 	}
+
+	matrix_update_elements_sum(result);
 
 	return result;
 }
@@ -157,6 +160,8 @@ matrix_t *matrix_strassen_multiply_pot_matrices(matrix_t *matrix_a,
 	matrix_delete(b3);
 	matrix_delete(b4);
 
+	matrix_update_elements_sum(result);
+
 	return result;
 }
 
@@ -183,6 +188,7 @@ void matrix_transpose(matrix_t *matrix)
 	for (unsigned int i = 0; i < new_size_n; i++)
 		for (unsigned int j = 0; j < new_size_m; j++)
 			matrix->values[i][j] = aux_matrix->values[i][j];
+	matrix_update_elements_sum(matrix);
 
 	matrix_delete(aux_matrix);
 }
@@ -237,6 +243,8 @@ void matrix_power_raise(unsigned int power, matrix_t **matrix)
 
 	matrix_delete(*matrix);
 	*matrix = result_matrix;
+
+	matrix_update_elements_sum(matrix);
 }
 
 // This functions swaps two matrices' pointers.
@@ -319,7 +327,7 @@ matrix_t *matrix_build_from_blocks(matrix_t *a, matrix_t *b, matrix_t *c,
 	return matrix;
 }
 
-int matrix_compute_elements_sum(const matrix_t *matrix)
+void matrix_update_elements_sum(matrix_t *matrix)
 {
 	int sum = 0;
 
@@ -327,21 +335,15 @@ int matrix_compute_elements_sum(const matrix_t *matrix)
 		for (unsigned int j = 0; j < matrix->size_m; j++)
 			sum = modulo(sum + matrix->values[i][j]);
 
-	return sum;
+	matrix->sum = sum;
 }
 
 int matrix_cmp_matrices_ascending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = matrix_compute_elements_sum(a);
-	int sum_b = matrix_compute_elements_sum(b);
-
-	return sum_a - sum_b;
+	return a->sum - b->sum;
 }
 
 int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b)
 {
-	int sum_a = matrix_compute_elements_sum(a);
-	int sum_b = matrix_compute_elements_sum(b);
-
-	return sum_b - sum_a;
+	return b->sum - a->sum;
 }

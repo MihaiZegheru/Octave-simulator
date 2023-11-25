@@ -16,6 +16,10 @@ typedef struct {
 	 */
 	unsigned int size_m;
 	/**
+	 * @brief The sum of the elements
+	 */
+	unsigned int sum;
+	/**
 	 * @brief The values in the matrix
 	 */
 	int **values;
@@ -151,7 +155,7 @@ void matrix_recursive_power_raise(unsigned int power, matrix_t *matrix,
  * @param *matrix:
  * @return int
  */
-int matrix_compute_elements_sum(const matrix_t *matrix);
+void matrix_update_elements_sum(matrix_t *matrix);
 
 /**
  * @brief Calculates the difference between matrix_t a and matrix_t b;
