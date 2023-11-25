@@ -1,5 +1,4 @@
 <!-- Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb -->
-<!-- All rights reserved. -->
 
 # Octave Simulator
 This is a C project for my PCLP course homework, designed to simulate the GNU

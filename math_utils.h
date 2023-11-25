@@ -1,6 +1,5 @@
 /*
  *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
- *   All rights reserved.
  */
 
 #ifndef MATH_UTILS_H__

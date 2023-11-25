@@ -1,6 +1,5 @@
 /*
  *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
- *   All rights reserved.
  */
 
 #ifndef APP_MANAGER_H__
