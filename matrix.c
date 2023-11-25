@@ -59,7 +59,7 @@ void matrix_selective_resize(unsigned int new_size_n, unsigned int new_size_m,
 		for (unsigned int j = 0; j < new_size_m; j++)
 			matrix->values[i][j] = aux_matrix->values[i][j];
 	matrix_update_elements_sum(matrix);
-	
+
 	matrix_delete(aux_matrix);
 }
 
@@ -244,7 +244,7 @@ void matrix_power_raise(unsigned int power, matrix_t **matrix)
 	matrix_delete(*matrix);
 	*matrix = result_matrix;
 
-	matrix_update_elements_sum(matrix);
+	matrix_update_elements_sum(*matrix);
 }
 
 // This functions swaps two matrices' pointers.
