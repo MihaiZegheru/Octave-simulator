@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
+ *   All rights reserved.
+ */
+
 #include "math_utils.h"
 
 #define MODULO 10007

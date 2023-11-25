@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
+ *   All rights reserved.
+ */
+
 #include "app_manager.h"
 
 void task_read_matrix(matrix_array_t *matrix_array)

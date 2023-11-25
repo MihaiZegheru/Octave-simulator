@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
+ *   All rights reserved.
+ */
+
 #include "matrix.h"
 
 // This function adds two given matrices and returns a new one as the result.

@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
+ *   All rights reserved.
+ */
+
 #include "matrix.h"
 
 matrix_t *matrix_strassen_compute_m1(matrix_t *a1, matrix_t *a4, matrix_t *b1,

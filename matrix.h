@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
+ *   All rights reserved.
+ */
+
 #ifndef MATRIX_H__
 #define MATRIX_H__
 
@@ -214,6 +219,5 @@ matrix_t *matrix_strassen_compute_c2(matrix_t *m3, matrix_t *m5);
 matrix_t *matrix_strassen_compute_c3(matrix_t *m2, matrix_t *m4);
 matrix_t *matrix_strassen_compute_c4(matrix_t *m1, matrix_t *m2, matrix_t *m3,
 									 matrix_t *m6);
-
 
 #endif

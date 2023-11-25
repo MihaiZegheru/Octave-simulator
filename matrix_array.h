@@ -1,3 +1,8 @@
+/*
+ *   Copyright (c) 2023-2024 | Mihai Zegheru | 312CAb
+ *   All rights reserved.
+ */
+
 #ifndef MATRIX_ARRAY_H__
 #define MATRIX_ARRAY_H__
 
