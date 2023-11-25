@@ -14,7 +14,7 @@ matrix_t *io_read_matrix(void)
 			scanf("%d", &matrix->values[i][j]);
 
 	matrix_update_elements_sum(matrix);
-	
+
 	return matrix;
 }
 

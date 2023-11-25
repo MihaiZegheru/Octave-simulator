@@ -180,21 +180,21 @@ int matrix_cmp_matrices_descending(const matrix_t *a, const matrix_t *b);
 
 /**
  * @brief This function adds two given matrices and returns a new one as the
- * 		  result.
- * 
- * @param a 
- * @param b 
- * @return matrix_t* 
+ *		  result.
+ *
+ * @param a
+ * @param b
+ * @return matrix_t*
  */
 matrix_t *matrix_math_add_matrices(matrix_t *a, matrix_t *b);
 
 /**
  * @brief This function substracts two given matrices and returns a new one as
- * 		  the result.
- * 
- * @param a 
- * @param b 
- * @return matrix_t* 
+ *		  the result.
+ *
+ * @param a
+ * @param b
+ * @return matrix_t*
  */
 matrix_t *matrix_math_subtract_matrices(matrix_t *a, matrix_t *b);
 
