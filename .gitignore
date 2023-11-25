@@ -63,7 +63,6 @@ tasks
 .checkpatch-camelcase.git.
 check
 *.sh
-README.md
 
 # Homework executable
 my_octave
