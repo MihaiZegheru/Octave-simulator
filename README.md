@@ -7,7 +7,7 @@ Octave.
 ## About
 This is my homework for my Computer Programming and Programming Languages
 course, that I took in my first semester of university, in 2023. Its main goal
-is to put to use what I have learnt since now, with a heavier note on dynamic
+is to put to use what I have learnt until now, with a heavier note on dynamic
 allocation in C.
 
 This project facilitates working with matrices and perferoming various
